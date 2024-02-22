@@ -1,5 +1,5 @@
 // Statistic.java
-package stat_hub;
+
 import java.util.Arrays;
  class Statistic {
     private double[] data;
