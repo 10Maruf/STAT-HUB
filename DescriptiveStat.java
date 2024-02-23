@@ -1,5 +1,4 @@
-
-
+package stat_hub;
 import stat_hub.*;
 import java.util.*;
 
@@ -84,5 +83,11 @@ public class DescriptiveStat extends Statistic {
 
         // Calculate population variance
         return sumSquaredDifferences / getData().length;
+    }
+    public double populationStandardDeviation() {
+        return Math.sqrt(populationVariance());
+    }
+    public double sampleStandardDeviation() {
+        return Math.sqrt(sampleVariance());
     }
 }
