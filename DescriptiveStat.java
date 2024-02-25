@@ -1,5 +1,5 @@
-package stat_hub;
-import stat_hub.*;
+package StatHub;
+import StatHub.*;
 import java.util.*;
 
 public class DescriptiveStat extends Statistic {

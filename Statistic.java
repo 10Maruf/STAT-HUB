@@ -1,7 +1,10 @@
 // Statistic.java
-package stat_hub;
+package StatHub;
+
 import java.util.Arrays;
- class Statistic {
+import java.util.Scanner;
+
+public class Statistic {
     private double[] data;
 
     public Statistic(double[] data) {
@@ -21,5 +24,19 @@ import java.util.Arrays;
         }
         return sum;
     }
+
+    public double[] arrayInput(int n) {
+        data = new double[n];
+        Scanner sc = new Scanner(System.in);
+        for (int i = 0; i < n; i++) {
+            data[i] = sc.nextDouble();
+        }
+        return data;
+    }
+
+    public static void cls() {
+        // ANSI escape code to clear screen
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
 }
-  
