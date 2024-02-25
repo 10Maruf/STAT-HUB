@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 import StatHub.DescriptiveStat;
 import StatHub.Statistic;
@@ -68,7 +69,8 @@ public class Main {
                         System.out.println("4. Range");
                         System.out.println("5. Variance");
                         System.out.println("6. Standard Deviation");
-                        System.out.println("7. Back to Main Menu");
+                        System.out.println("7. Descriptive Statistics Table");
+                        System.out.println("8. Back to Main Menu");
 
                         // Read user input for descriptive stat menu
                         int descriptiveStatChoice = scanner.nextInt();
@@ -184,6 +186,33 @@ public class Main {
                                 }
                                 break;
                             case 7:
+                                // Display the descriptive statistics table
+                                System.out.println("Descriptive Statistics Table:");
+                                System.out.println("+-----------------------+-----------------------+");
+                                System.out.println("|      Data Size        |     " + String.format("%-21d", n) + "|");
+                                System.out.println("+-----------------------+-----------------------+");
+                                System.out.println("|      Data Elements    | " + String.format("%-21s", Arrays.toString(stat.getData())) + " |");
+                                System.out.println("+-----------------------+-----------------------+");
+                                System.out.println("|        Mean           |     " + String.format("%-21.2f", stat.mean()) + "|");
+                                System.out.println("+-----------------------+-----------------------+");
+                                System.out.println("|       Median          |     " + String.format("%-21.2f", stat.median()) + "|");
+                                System.out.println("+-----------------------+-----------------------+");
+                                System.out.println("|        Mode           |     " + String.format("%-21.2f", stat.mode()) + "|");
+                                System.out.println("+-----------------------+-----------------------+");
+                                System.out.println("|        Range          |     " + String.format("%-21.2f", stat.range()) + "|");
+                                System.out.println("+-----------------------+-----------------------+");
+                                System.out.println("| Population Variance   |     " + String.format("%-21.2f", stat.populationVariance()) + "|");
+                                System.out.println("+-----------------------+-----------------------+");
+                                System.out.println("|   Sample Variance     |     " + String.format("%-21.2f", stat.sampleVariance()) + "|");
+                                System.out.println("+-----------------------+-----------------------+");
+                                System.out.println("|   Population SD       |     " + String.format("%-21.2f", stat.populationStandardDeviation()) + "|");
+                                System.out.println("+-----------------------+-----------------------+");
+                                System.out.println("|      Sample SD        |     " + String.format("%-21.2f", stat.sampleStandardDeviation()) + "|");
+                                System.out.println("+-----------------------+-----------------------+");
+                                
+                                goBack();
+                                break;
+                            case 8:
                                 // Go back to main menu
                                 backToMain = true;
                                 break;
