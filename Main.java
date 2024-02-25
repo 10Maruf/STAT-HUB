@@ -2,6 +2,7 @@ import java.util.Scanner;
 import StatHub.DescriptiveStat;
 import StatHub.Statistic;
 import StatGraphics.Welcome;
+import StatGraphics.Loading;
 
 public class Main {
     public static void goBack() {
@@ -18,11 +19,17 @@ public class Main {
     public static void main(String[] args) {
         // Inside the main method of your Main class
         Welcome welcomeGraphics = new Welcome();
+        Loading loadingGraphics = new Loading();
         // welcomeGraphics.art();
+        welcomeGraphics.art();
+        System.out.println();
+        System.out.println();
+        loadingGraphics.art();// loading in console
         Scanner scanner = new Scanner(System.in);
         Statistic cls = new Statistic(null);
         boolean exitProgram = false;
         System.out.println();
+        cls.cls();
         // System.out.println();
         while (!exitProgram) {
             // Display Main Menu
