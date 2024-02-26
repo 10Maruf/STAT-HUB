@@ -4,6 +4,8 @@ import StatHub.DescriptiveStat;
 import StatHub.Statistic;
 import StatGraphics.Welcome;
 import StatGraphics.Loading;
+import StatHub.HypothesisTesting;
+import StatTable.T_Table;
 
 public class Main {
     public static void goBack() {
@@ -191,25 +193,34 @@ public class Main {
                                 System.out.println("+-----------------------+-----------------------+");
                                 System.out.println("|      Data Size        |     " + String.format("%-21d", n) + "|");
                                 System.out.println("+-----------------------+-----------------------+");
-                                System.out.println("|      Data Elements    | " + String.format("%-21s", Arrays.toString(stat.getData())) + " |");
+                                System.out.println("|      Data Elements    | "
+                                        + String.format("%-21s", Arrays.toString(stat.getData())) + " |");
                                 System.out.println("+-----------------------+-----------------------+");
-                                System.out.println("|        Mean           |     " + String.format("%-21.2f", stat.mean()) + "|");
+                                System.out.println(
+                                        "|        Mean           |     " + String.format("%-21.2f", stat.mean()) + "|");
                                 System.out.println("+-----------------------+-----------------------+");
-                                System.out.println("|       Median          |     " + String.format("%-21.2f", stat.median()) + "|");
+                                System.out.println("|       Median          |     "
+                                        + String.format("%-21.2f", stat.median()) + "|");
                                 System.out.println("+-----------------------+-----------------------+");
-                                System.out.println("|        Mode           |     " + String.format("%-21.2f", stat.mode()) + "|");
+                                System.out.println(
+                                        "|        Mode           |     " + String.format("%-21.2f", stat.mode()) + "|");
                                 System.out.println("+-----------------------+-----------------------+");
-                                System.out.println("|        Range          |     " + String.format("%-21.2f", stat.range()) + "|");
+                                System.out.println("|        Range          |     "
+                                        + String.format("%-21.2f", stat.range()) + "|");
                                 System.out.println("+-----------------------+-----------------------+");
-                                System.out.println("| Population Variance   |     " + String.format("%-21.2f", stat.populationVariance()) + "|");
+                                System.out.println("| Population Variance   |     "
+                                        + String.format("%-21.2f", stat.populationVariance()) + "|");
                                 System.out.println("+-----------------------+-----------------------+");
-                                System.out.println("|   Sample Variance     |     " + String.format("%-21.2f", stat.sampleVariance()) + "|");
+                                System.out.println("|   Sample Variance     |     "
+                                        + String.format("%-21.2f", stat.sampleVariance()) + "|");
                                 System.out.println("+-----------------------+-----------------------+");
-                                System.out.println("|   Population SD       |     " + String.format("%-21.2f", stat.populationStandardDeviation()) + "|");
+                                System.out.println("|   Population SD       |     "
+                                        + String.format("%-21.2f", stat.populationStandardDeviation()) + "|");
                                 System.out.println("+-----------------------+-----------------------+");
-                                System.out.println("|      Sample SD        |     " + String.format("%-21.2f", stat.sampleStandardDeviation()) + "|");
+                                System.out.println("|      Sample SD        |     "
+                                        + String.format("%-21.2f", stat.sampleStandardDeviation()) + "|");
                                 System.out.println("+-----------------------+-----------------------+");
-                                
+
                                 goBack();
                                 break;
                             case 8:
@@ -224,14 +235,77 @@ public class Main {
                         }
                     }
                     break;
-                // case 2:
-                // // Display Hypothesis Testing menu
-                // // Similar implementation as Descriptive Stat menu
-                // break;
-                // case 3:
-                // // Display ANOVA menu
-                // // Similar implementation as Descriptive Stat menu
-                // break;
+                case 2:// Hypothesis Testing
+                       // input sample
+                    String tTableFile = "E:\\.Programming\\STAT HUB\\src\\t_table.txt"; // T- table file location
+
+                    T_Table table = new T_Table();
+                    double[][] tTabel = table.readTable(tTableFile);
+                    // DescriptiveStat stat = new DescriptiveStat(data);
+                    backToMain = false;
+                    // Display Hypothesis testing menu
+                    while (!backToMain) {
+                        cls.cls();
+                        System.out.println("Hypothesis Testing");
+                        System.out.println("1. Population Standard Deviation Given");
+                        System.out.println("2. Not Given");
+                        System.out.println("3. Display T-table");
+                        System.out.println("4. Back to Main Menu");
+
+                        // Read user input for descriptive stat menu
+                        int HypothesisChoice = scanner.nextInt();
+                        cls.cls();
+                        switch (HypothesisChoice) {
+                            case 1:
+
+                                System.out.println("Enter Null Hypothesis: ");
+                                double nullHypothesis = scanner.nextDouble();
+                                cls.cls();
+                                System.out.println("Enter Population Mean: ");
+                                double populationMean = scanner.nextDouble();
+                                cls.cls();
+                                System.out.println("Enter Population Standard Deviation: ");
+                                double populationStandardDeviation = scanner.nextDouble();
+                                cls.cls();
+                                System.out.println("Enter Sample Size: ");
+                                int size = scanner.nextInt();
+                                System.out.println("Enter Significance Level in %: ");
+                                String sLevel = scanner.nextLine();
+                                cls.cls();
+                                double[] data2 = new double[size];
+                                HypothesisTesting hypo = new HypothesisTesting(data2, populationMean, nullHypothesis,
+                                        populationStandardDeviation, size);
+                                double zScore = hypo.zTest();
+                                if (tTabel[30][table.column(sLevel)] < zScore) {
+                                    System.out.println("Fail to reject Null Hypothesis.");
+
+                                } else
+                                    System.out.println("Reject Null Hypothesis");
+                                goBack();
+                                break;
+                            case 2:
+
+                                break;
+                            case 3:
+                                table.displayTable(tTabel);
+                                goBack();
+                                break;
+                            case 4:
+                                backToMain = true;
+                                break;
+                            default:
+                                break;
+                        }
+                        // Display Hypothesis Testing menu
+
+                        // Similar implementation as Descriptive Stat menu
+                        // break;
+                    }
+                    break;
+                    // case 3:
+                    // // Display ANOVA menu
+                    // // Similar implementation as Descriptive Stat menu
+                    // break;
                 case 4:
                     // Exit program
                     exitProgram = true;
