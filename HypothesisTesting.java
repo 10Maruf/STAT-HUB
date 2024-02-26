@@ -26,4 +26,5 @@ public class HypothesisTesting extends DescriptiveStat {
     public double zTest() {// method zTest
         return Math.abs(((populationMean - nullHypothesis) * Math.sqrt(size)) / populationStandardDeviation);
     }
+    
 }

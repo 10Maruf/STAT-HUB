@@ -247,8 +247,8 @@ public class Main {
                     while (!backToMain) {
                         cls.cls();
                         System.out.println("Hypothesis Testing");
-                        System.out.println("1. Population Standard Deviation Given");
-                        System.out.println("2. Not Given");
+                        System.out.println("1. One Tailed");
+                        System.out.println("2. Two Tailed");
                         System.out.println("3. Display T-table");
                         System.out.println("4. Back to Main Menu");
 
@@ -256,36 +256,271 @@ public class Main {
                         int HypothesisChoice = scanner.nextInt();
                         cls.cls();
                         switch (HypothesisChoice) {
-                            case 1:
+                            case 1:// one tailed
+                                boolean backToHypothesis = false;
+                                // Display Hypothesis testing menu
+                                while (!backToHypothesis) {
+                                    cls.cls();
+                                    System.out.println("One Tailed Test");
+                                    System.out.println("1. Population Standard Deviation Given");
+                                    System.out.println("2. Not Given");
+                                    System.out.println("3. Back to Hypothesis Testing");
 
-                                System.out.println("Enter Null Hypothesis: ");
-                                double nullHypothesis = scanner.nextDouble();
-                                cls.cls();
-                                System.out.println("Enter Population Mean: ");
-                                double populationMean = scanner.nextDouble();
-                                cls.cls();
-                                System.out.println("Enter Population Standard Deviation: ");
-                                double populationStandardDeviation = scanner.nextDouble();
-                                cls.cls();
-                                System.out.println("Enter Sample Size: ");
-                                int size = scanner.nextInt();
-                                System.out.println("Enter Significance Level in %: ");
-                                String sLevel = scanner.nextLine();
-                                cls.cls();
-                                double[] data2 = new double[size];
-                                HypothesisTesting hypo = new HypothesisTesting(data2, populationMean, nullHypothesis,
-                                        populationStandardDeviation, size);
-                                double zScore = hypo.zTest();
-                                if (tTabel[30][table.column(sLevel)] < zScore) {
-                                    System.out.println("Fail to reject Null Hypothesis.");
+                                    // Read user input for descriptive stat menu
+                                    int HypothesisChoice1 = scanner.nextInt();
+                                    cls.cls();
+                                    switch (HypothesisChoice1) {
+                                        // population SD given
+                                        case 1:
 
-                                } else
-                                    System.out.println("Reject Null Hypothesis");
-                                goBack();
+                                            System.out.println("Enter Null Hypothesis: ");
+                                            double nullHypothesis = scanner.nextDouble();
+                                            cls.cls();
+                                            System.out.println("Enter Population Mean: ");
+                                            double populationMean = scanner.nextDouble();
+                                            cls.cls();
+                                            System.out.println("Enter Population Standard Deviation: ");
+                                            double populationStandardDeviation = scanner.nextDouble();
+                                            cls.cls();
+                                            System.out.println("Enter Sample Size: ");
+                                            int size = scanner.nextInt();
+                                            cls.cls();
+                                            scanner.nextLine(); // Consume newline character
+                                            System.out.println("Enter Significance Level in %: ");
+                                            String sLevel = scanner.nextLine();
+                                            double[] data2 = new double[size];
+                                            HypothesisTesting hypo = new HypothesisTesting(data2, populationMean,
+                                                    nullHypothesis,
+                                                    populationStandardDeviation, size);
+                                            double zScore = hypo.zTest();
+                                            cls.cls();
+                                            if (tTabel[30][table.column(sLevel)] < zScore) {
+                                                System.out.println("Fail to reject Null Hypothesis.");
+
+                                            } else
+                                                System.out.println("Reject Null Hypothesis");
+                                            goBack();
+                                            break;
+                                        case 2:// population not given
+                                            boolean backToHypo1 = false;
+                                            while (!backToHypo1) {
+                                                cls.cls();
+                                                System.out.println("Population Standard Deviation Not Given");
+                                                System.out.println("1. Samples are given");
+                                                System.out.println("2. Samples are not given");
+                                                System.out.println("3. back to One Tailed");
+                                                int notGivenChoice = scanner.nextInt();
+                                                cls.cls();
+                                                switch (notGivenChoice) {
+                                                    case 1:// samples are given
+                                                        System.out.println("Enter Null Hypothesis: ");
+                                                        double nH = scanner.nextDouble();
+                                                        cls.cls();
+                                                        System.out.println("Enter sample size: ");
+                                                        int ssize = scanner.nextInt();
+                                                        double hypoData[] = new double[ssize];
+                                                        cls.cls();
+                                                        System.out.println("Enter Sample elements: ");
+                                                        DescriptiveStat inhypodata = new DescriptiveStat(hypoData);
+                                                        hypoData = inhypodata.arrayInput(ssize);
+                                                        scanner.nextLine(); // Consume newline character
+                                                        HypothesisTesting hypodata = new HypothesisTesting(hypoData,
+                                                                inhypodata.mean(), nH,
+                                                                inhypodata.sampleStandardDeviation(), ssize);
+                                                        cls.cls();
+                                                        System.out.println("Enter Significance Level in % : ");
+                                                        String sigLevel = scanner.nextLine();
+                                                        double tTest = hypodata.zTest();
+                                                        cls.cls();
+                                                        if (tTabel[ssize - 2][table.column(sigLevel)] < tTest) {
+                                                            System.out.println("Fail to reject Null Hypothesis.");
+
+                                                        } else
+                                                            System.out.println("Reject Null Hypothesis");
+                                                        goBack();
+                                                        break;
+                                                    case 2:// not given
+                                                        System.out.println("Enter Null Hypothesis: ");
+                                                        double nullHypothesis2 = scanner.nextDouble();
+                                                        cls.cls();
+                                                        System.out.println("Enter Population Mean: ");
+                                                        double populationMean2 = scanner.nextDouble();
+                                                        cls.cls();
+                                                        System.out.println("Enter Population Standard Deviation: ");
+                                                        double populationStandardDeviation2 = scanner.nextDouble();
+                                                        cls.cls();
+                                                        System.out.println("Enter Sample Size: ");
+                                                        int size2 = scanner.nextInt();
+                                                        cls.cls();
+                                                        scanner.nextLine(); // Consume newline character
+                                                        System.out.println("Enter Significance Level in %: ");
+                                                        String sLevel2 = scanner.nextLine();
+                                                        double[] data22 = new double[size2];
+                                                        HypothesisTesting hypo2 = new HypothesisTesting(data22,
+                                                                populationMean2,
+                                                                nullHypothesis2,
+                                                                populationStandardDeviation2, size2);
+                                                        double zScore2 = hypo2.zTest();
+                                                        cls.cls();
+                                                        if (tTabel[size2 - 2][table.column(sLevel2)] < zScore2) {
+                                                            System.out.println("Fail to reject Null Hypothesis.");
+
+                                                        } else
+                                                            System.out.println("Reject Null Hypothesis");
+                                                        goBack();
+                                                        break;
+                                                    case 3:
+                                                        backToHypo1 = true;
+                                                        break;
+
+                                                    default:
+                                                        System.out.println("Invalid Choice!!");
+                                                        goBack();
+                                                        break;
+                                                }
+                                            }
+
+                                            break;
+                                        case 3:
+                                            backToHypothesis = true;
+                                            break;
+                                    }
+                                }
+                                // goBack();
                                 break;
-                            case 2:
+                            case 2:// two tailed
+                                boolean backToHypothesis2 = false;
+                                // Display Hypothesis testing menu
+                                while (!backToHypothesis2) {
+                                    cls.cls();
+                                    System.out.println("Two Tailed Test");
+                                    System.out.println("1. Population Standard Deviation Given");
+                                    System.out.println("2. Not Given");
+                                    System.out.println("3. Back to Hypothesis Testing");
 
+                                    // Read user input for descriptive stat menu
+                                    int HypothesisChoice2 = scanner.nextInt();
+                                    cls.cls();
+                                    switch (HypothesisChoice2) {
+                                        // population SD given
+                                        case 1:
+
+                                            System.out.println("Enter Null Hypothesis: ");
+                                            double nullHypothesis2 = scanner.nextDouble();
+                                            cls.cls();
+                                            System.out.println("Enter Population Mean: ");
+                                            double populationMean2 = scanner.nextDouble();
+                                            cls.cls();
+                                            System.out.println("Enter Population Standard Deviation: ");
+                                            double populationStandardDeviation2 = scanner.nextDouble();
+                                            cls.cls();
+                                            System.out.println("Enter Sample Size: ");
+                                            int size2 = scanner.nextInt();
+                                            cls.cls();
+                                            scanner.nextLine(); // Consume newline character
+                                            System.out.println("Enter Significance Level in %: ");
+                                            String sLevel2 = scanner.nextLine();
+                                            double[] data22 = new double[size2];
+                                            HypothesisTesting hypo2 = new HypothesisTesting(data22, populationMean2,
+                                                    nullHypothesis2,
+                                                    populationStandardDeviation2, size2);
+                                            double zScore2 = hypo2.zTest();
+                                            cls.cls();
+                                            if (tTabel[30][table.column(sLevel2) + 1] < zScore2) {
+                                                System.out.println("Fail to reject Null Hypothesis.");
+
+                                            } else
+                                                System.out.println("Reject Null Hypothesis");
+                                            goBack();
+                                            break;
+                                        case 2:// population not given
+                                            boolean backToHypo2 = false;
+                                            while (!backToHypo2) {
+                                                cls.cls();
+                                                System.out.println("Population Standard Deviation Not Given");
+                                                System.out.println("1. Samples are given");
+                                                System.out.println("2. Samples are not given");
+                                                System.out.println("3. back to Two Tailed");
+                                                int notGivenChoice2 = scanner.nextInt();
+                                                cls.cls();
+                                                switch (notGivenChoice2) {
+                                                    case 1:// samples are given
+                                                        System.out.println("Enter Null Hypothesis: ");
+                                                        double nH2 = scanner.nextDouble();
+                                                        cls.cls();
+                                                        System.out.println("Enter sample size: ");
+                                                        int ssize2 = scanner.nextInt();
+                                                        double hypoData2[] = new double[ssize2];
+                                                        cls.cls();
+                                                        System.out.println("Enter Sample elements: ");
+                                                        DescriptiveStat inhypodata2 = new DescriptiveStat(hypoData2);
+                                                        hypoData2 = inhypodata2.arrayInput(ssize2);
+                                                        scanner.nextLine(); // Consume newline character
+                                                        HypothesisTesting hypodata2 = new HypothesisTesting(hypoData2,
+                                                                inhypodata2.mean(), nH2,
+                                                                inhypodata2.sampleStandardDeviation(), ssize2);
+                                                        cls.cls();
+                                                        System.out.println("Enter Significance Level in % : ");
+                                                        String sigLevel2 = scanner.nextLine();
+                                                        double tTest2 = hypodata2.zTest();
+                                                        cls.cls();
+                                                        if (tTabel[ssize2 - 2][table.column(sigLevel2) + 1] < tTest2) {
+                                                            System.out.println("Fail to reject Null Hypothesis.");
+
+                                                        } else
+                                                            System.out.println("Reject Null Hypothesis");
+                                                        goBack();
+                                                        break;
+                                                    case 2:// not given
+                                                        System.out.println("Enter Null Hypothesis: ");
+                                                        double nullHypothesis22 = scanner.nextDouble();
+                                                        cls.cls();
+                                                        System.out.println("Enter Population Mean: ");
+                                                        double populationMean22 = scanner.nextDouble();
+                                                        cls.cls();
+                                                        System.out.println("Enter Population Standard Deviation: ");
+                                                        double populationStandardDeviation22 = scanner.nextDouble();
+                                                        cls.cls();
+                                                        System.out.println("Enter Sample Size: ");
+                                                        int size22 = scanner.nextInt();
+                                                        cls.cls();
+                                                        scanner.nextLine(); // Consume newline character
+                                                        System.out.println("Enter Significance Level in %: ");
+                                                        String sLevel22 = scanner.nextLine();
+                                                        double[] data222 = new double[size22];
+                                                        HypothesisTesting hypo22 = new HypothesisTesting(data222,
+                                                                populationMean22,
+                                                                nullHypothesis22,
+                                                                populationStandardDeviation22, size22);
+                                                        double zScore22 = hypo22.zTest();
+                                                        cls.cls();
+                                                        if (tTabel[size22 - 2][table.column(sLevel22) + 1] < zScore22) {
+                                                            System.out.println("Fail to reject Null Hypothesis.");
+
+                                                        } else
+                                                            System.out.println("Reject Null Hypothesis");
+                                                        goBack();
+                                                        break;
+                                                    case 3:
+                                                        backToHypo2 = true;
+                                                        break;
+
+                                                    default:
+                                                        System.out.println("Invalid Choice!!");
+                                                        goBack();
+                                                        break;
+                                                }
+                                            }
+
+                                            break;
+                                        case 3:
+                                            backToHypothesis2 = true;
+                                            break;
+                                    }
+                                }
+                                // goBack();
                                 break;
+                            // break;
                             case 3:
                                 table.displayTable(tTabel);
                                 goBack();
@@ -294,18 +529,18 @@ public class Main {
                                 backToMain = true;
                                 break;
                             default:
+                                System.out.println("Invalid Choice!!!");
+                                goBack();
                                 break;
-                        }
-                        // Display Hypothesis Testing menu
 
-                        // Similar implementation as Descriptive Stat menu
-                        // break;
+                        }
                     }
+                case 3:
+                    // Display ANOVA menu
+                    // Similar implementation as Descriptive Stat menu
+                    System.out.println("Coming Soon........");
+                    System.out.println("wait for the next update");
                     break;
-                    // case 3:
-                    // // Display ANOVA menu
-                    // // Similar implementation as Descriptive Stat menu
-                    // break;
                 case 4:
                     // Exit program
                     exitProgram = true;
