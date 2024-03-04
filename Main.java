@@ -6,6 +6,8 @@ import StatGraphics.Welcome;
 import StatGraphics.Loading;
 import StatHub.HypothesisTesting;
 import StatTable.T_Table;
+import StatTable.F_Table;
+import StatHub.ANOVA;
 
 public class Main {
     public static void goBack() {
@@ -537,9 +539,66 @@ public class Main {
                     }
                 case 3:
                     // Display ANOVA menu
-                    // Similar implementation as Descriptive Stat menu
-                    System.out.println("Coming Soon........");
-                    System.out.println("wait for the next update");
+                    String fTableFile = "E:\\.Programming\\STAT HUB\\src\\f_table.txt"; // F- table file location
+
+                    F_Table table2 = new F_Table();
+                    double[][] fTabel = table2.readTable(fTableFile);
+                    backToMain = false;
+                    while (!backToMain) {
+                        cls.cls();
+                        System.out.println("ANOVA");
+                        System.out.println("1. One Way");
+                        System.out.println("2. Two Way");
+                        System.out.println("3. Display F-Table");
+                        System.out.println("4. Back to main menu");
+                        // Read user input for descriptive stat menu
+                        int anovaChoice = scanner.nextInt();
+                        cls.cls();
+                        switch (anovaChoice) {
+                            case 1:// one way
+                                System.out.println("Enter Table Row size: ");
+                                int nr = scanner.nextInt();
+                                cls.cls();
+                                System.out.println("Enter Table Column Size: ");
+                                int m = scanner.nextInt();
+                                cls.cls();
+                                double[][] array2d = new double[nr][m];
+                                System.out.println("Enter the table: ");
+                                array2d = cls.arrayInput(nr, m);
+                                cls.cls();
+                                ANOVA anova = new ANOVA(array2d, nr, m);
+                                double oneTS = anova.oneWay();
+                                if (fTabel[nr * m - m - 1][m - 2] < oneTS) {
+                                    System.out.println("Fail to reject Null Hypothesis.");
+
+                                } else
+                                    System.out.println("Reject Null Hypothesis");
+                                System.out.println(oneTS);
+                                System.out.println(fTabel[nr * m - m - 1][m - 2]);
+
+                                goBack();
+                                break;
+                            case 2:// two way
+                                System.out.println("Coming soon....");
+                                System.out.println();
+                                System.out.println("Wait for the next update!");
+                                goBack();
+                                break;
+                            case 3:// display f-table
+                                cls.cls();
+                                table2.displayTable(fTabel);
+                                goBack();
+                                break;
+                            case 4:
+                                backToMain = true;
+                                break;
+
+                            default:
+                                System.out.println("Invalid Choice!!");
+                                goBack();
+                                break;
+                        }
+                    }
                     break;
                 case 4:
                     // Exit program
