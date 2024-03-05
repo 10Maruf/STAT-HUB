@@ -4,6 +4,7 @@ import StatHub.DescriptiveStat;
 import StatHub.Statistic;
 import StatGraphics.Welcome;
 import StatGraphics.Loading;
+import StatGraphics.Credits;
 import StatHub.HypothesisTesting;
 import StatTable.T_Table;
 import StatTable.F_Table;
@@ -25,6 +26,7 @@ public class Main {
         // Inside the main method of your Main class
         Welcome welcomeGraphics = new Welcome();
         Loading loadingGraphics = new Loading();
+        Credits creditsGraphics = new Credits();
         // welcomeGraphics.art();
         welcomeGraphics.art();
         System.out.println();
@@ -38,6 +40,7 @@ public class Main {
         // System.out.println();
         while (!exitProgram) {
             // Display Main Menu
+            System.out.println();
             welcomeGraphics.art();// stat hub welcome logo
             System.out.println();
             System.out.println();
@@ -45,7 +48,8 @@ public class Main {
             System.out.println("1. Descriptive statistics");
             System.out.println("2. Hypothesis testing");
             System.out.println("3. ANOVA");
-            System.out.println("4. Exit");
+            System.out.println("4. Credits");
+            System.out.println("5. Exit");
 
             // Read user input for main menu
             System.out.println("Enter Choice: ");
@@ -77,6 +81,8 @@ public class Main {
                         System.out.println("8. Back to Main Menu");
 
                         // Read user input for descriptive stat menu
+                        System.out.println("Enter Choice: ");
+
                         int descriptiveStatChoice = scanner.nextInt();
                         cls.cls();
                         switch (descriptiveStatChoice) {
@@ -118,6 +124,8 @@ public class Main {
                                     System.out.println("3. Back to Descriptive Stat Menu");
 
                                     // Read user input for variance submenu
+                                    System.out.println("Enter Choice: ");
+
                                     int varianceChoice = scanner.nextInt();
                                     cls.cls();
                                     switch (varianceChoice) {
@@ -158,6 +166,8 @@ public class Main {
                                     System.out.println("3. Back to Descriptive Stat Menu");
 
                                     // Read user input for Standard Deviation submenu
+                                    System.out.println("Enter Choice: ");
+
                                     int StandardDeviationChoice = scanner.nextInt();
                                     cls.cls();
                                     switch (StandardDeviationChoice) {
@@ -255,6 +265,8 @@ public class Main {
                         System.out.println("4. Back to Main Menu");
 
                         // Read user input for descriptive stat menu
+                        System.out.println("Enter Choice: ");
+
                         int HypothesisChoice = scanner.nextInt();
                         cls.cls();
                         switch (HypothesisChoice) {
@@ -269,6 +281,8 @@ public class Main {
                                     System.out.println("3. Back to Hypothesis Testing");
 
                                     // Read user input for descriptive stat menu
+                                    System.out.println("Enter Choice: ");
+
                                     int HypothesisChoice1 = scanner.nextInt();
                                     cls.cls();
                                     switch (HypothesisChoice1) {
@@ -311,6 +325,8 @@ public class Main {
                                                 System.out.println("1. Samples are given");
                                                 System.out.println("2. Samples are not given");
                                                 System.out.println("3. back to One Tailed");
+                                                System.out.println("Enter Choice: ");
+
                                                 int notGivenChoice = scanner.nextInt();
                                                 cls.cls();
                                                 switch (notGivenChoice) {
@@ -364,7 +380,7 @@ public class Main {
                                                                 populationStandardDeviation2, size2);
                                                         double zScore2 = hypo2.zTest();
                                                         cls.cls();
-                                                        if (tTabel[size2 - 2][table.column(sLevel2)] < zScore2) {
+                                                        if (tTabel[size2 - 2][table.column(sLevel2)] > zScore2) {
                                                             System.out.println("Fail to reject Null Hypothesis.");
 
                                                         } else
@@ -401,6 +417,8 @@ public class Main {
                                     System.out.println("3. Back to Hypothesis Testing");
 
                                     // Read user input for descriptive stat menu
+                                    System.out.println("Enter Choice: ");
+
                                     int HypothesisChoice2 = scanner.nextInt();
                                     cls.cls();
                                     switch (HypothesisChoice2) {
@@ -443,6 +461,8 @@ public class Main {
                                                 System.out.println("1. Samples are given");
                                                 System.out.println("2. Samples are not given");
                                                 System.out.println("3. back to Two Tailed");
+                                                System.out.println("Enter Choice: ");
+
                                                 int notGivenChoice2 = scanner.nextInt();
                                                 cls.cls();
                                                 switch (notGivenChoice2) {
@@ -552,6 +572,8 @@ public class Main {
                         System.out.println("3. Display F-Table");
                         System.out.println("4. Back to main menu");
                         // Read user input for descriptive stat menu
+                        System.out.println("Enter Choice: ");
+
                         int anovaChoice = scanner.nextInt();
                         cls.cls();
                         switch (anovaChoice) {
@@ -568,13 +590,29 @@ public class Main {
                                 cls.cls();
                                 ANOVA anova = new ANOVA(array2d, nr, m);
                                 double oneTS = anova.oneWay();
-                                if (fTabel[nr * m - m - 1][m - 2] > oneTS) {
-                                    System.out.println("Fail to reject Null Hypothesis.");
 
-                                } else
-                                    System.out.println("Reject Null Hypothesis");
-                                System.out.println(oneTS);
-                                System.out.println(fTabel[nr * m - m - 1][m - 2]);
+                                // ANOVA Table
+                                System.out.println("ANOVA");
+                                System.out.println(
+                                        "+-----------------------+--------+------------+----------------+----------+");
+                                System.out.println(
+                                        "| Source of Variation   |   SS   |     df     |       F        |  F crit  |");
+                                System.out.println(
+                                        "+-----------------------+--------+------------+----------------+----------+");
+                                System.out.println(String.format("| %-21s | %-6.1f | %-10d | %-14.8f | %-8.3f|",
+                                        "Between Groups", anova.ssb(), m - 1, oneTS, fTabel[nr * m - m - 1][m - 2]));
+                                System.out.println(String.format("| %-21s | %-6.1f | %-10d |", "Within Groups",
+                                        anova.ssw(), nr * m - m));
+                                System.out.println(
+                                        String.format("| %-21s | %-6.1f | %-10d |", "Total", anova.sst(), m * nr - 1));
+                                System.out.println(
+                                        "+-----------------------+--------+------------+----------------+----------+");
+                                System.out.println();
+                                // Output based on the condition
+                                String hypothesisResult = (fTabel[nr * m - m - 1][m - 2] > oneTS)
+                                        ? "Fail to reject Null Hypothesis."
+                                        : "Reject Null Hypothesis.";
+                                System.out.println(hypothesisResult);
 
                                 goBack();
                                 break;
@@ -600,7 +638,12 @@ public class Main {
                         }
                     }
                     break;
-                case 4:
+                case 4:// credits
+                    creditsGraphics.art();
+                    goBack();
+                    cls.cls();
+                    break;
+                case 5:
                     // Exit program
                     exitProgram = true;
                     break;
