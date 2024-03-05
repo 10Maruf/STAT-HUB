@@ -296,7 +296,7 @@ public class Main {
                                                     populationStandardDeviation, size);
                                             double zScore = hypo.zTest();
                                             cls.cls();
-                                            if (tTabel[30][table.column(sLevel)] < zScore) {
+                                            if (tTabel[30][table.column(sLevel)] > zScore) {
                                                 System.out.println("Fail to reject Null Hypothesis.");
 
                                             } else
@@ -334,7 +334,7 @@ public class Main {
                                                         String sigLevel = scanner.nextLine();
                                                         double tTest = hypodata.zTest();
                                                         cls.cls();
-                                                        if (tTabel[ssize - 2][table.column(sigLevel)] < tTest) {
+                                                        if (tTabel[ssize - 2][table.column(sigLevel)] > tTest) {
                                                             System.out.println("Fail to reject Null Hypothesis.");
 
                                                         } else
@@ -568,7 +568,7 @@ public class Main {
                                 cls.cls();
                                 ANOVA anova = new ANOVA(array2d, nr, m);
                                 double oneTS = anova.oneWay();
-                                if (fTabel[nr * m - m - 1][m - 2] < oneTS) {
+                                if (fTabel[nr * m - m - 1][m - 2] > oneTS) {
                                     System.out.println("Fail to reject Null Hypothesis.");
 
                                 } else
