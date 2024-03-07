@@ -23,7 +23,6 @@ STAT HUB is a Java application developed as part of the Object Oriented Concepts
 
 3. **Compile the Java files**.
 
-## Usage
 
 ## Usage
 
