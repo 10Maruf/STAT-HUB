@@ -1,4 +1,4 @@
-package src;
+package StatHub;
 
 import StatHub.*;
 import java.util.*;

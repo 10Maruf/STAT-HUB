@@ -34,20 +34,16 @@ STAT HUB is a Java application developed as part of the Object Oriented Concepts
 
 ## Credits
 
-STAT HUB was developed by Group 4 members as part of the Object Oriented Concepts I Lab:
+STAT HUB was created by:
 
-- **Mofassel Alam Maruf** (Leader, Roll: ASH2225014M)
-- **Sabbir Ahmed** (Roll: ASH2225005M)
-- **Md. Masum Bhuiyan** (Roll: MUH2225013M)
+- **Mofassel Alam Maruf** ( IIT,NSTU)
 
-**Course Teacher**: Nazmun Nahar (Lecturer)  
 **Institute**: Institute of Information Technology  
-**Program**: Software Engineering  
+**Program**: Bsc. in Software Engineering  
 **Institution**: Noakhali Science and Technology University  
-**Submission Date**: 07, March, 2024
 
 ## Version
-This is version 1.0 of STAT HUB. More features are coming soon!
+This is version 2.0 of STAT HUB. 
 
 ## License
 

@@ -1,5 +1,6 @@
 // HypothesisTesting.java
-package src;
+package StatHub;
+
 
 import StatHub.DescriptiveStat;
 import StatHub.Statistic;
