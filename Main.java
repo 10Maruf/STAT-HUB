@@ -1,15 +1,15 @@
-//Main file
+
 
 import java.util.Arrays;
 import java.util.Scanner;
 import StatHub.DescriptiveStat;
 import StatHub.Statistic;
-import StatGraphics.Welcome;
-import StatGraphics.Loading;
-import StatGraphics.Credits;
+import src.StatGraphics.Credits;
+import src.StatGraphics.Loading;
+import src.StatGraphics.Welcome;
+import src.StatTable.F_Table;
+import src.StatTable.T_Table;
 import StatHub.HypothesisTesting;
-import StatTable.T_Table;
-import StatTable.F_Table;
 import StatHub.ANOVA;
 
 public class Main {

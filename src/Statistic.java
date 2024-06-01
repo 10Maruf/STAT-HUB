@@ -1,5 +1,5 @@
 // Statistic.java
-package StatHub;
+package src;
 
 import java.util.Arrays;
 import java.util.Scanner;

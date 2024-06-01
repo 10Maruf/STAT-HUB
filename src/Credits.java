@@ -1,4 +1,4 @@
-package StatGraphics;
+package src;
 
 public class Credits implements StatGraphics {
     public void art() {

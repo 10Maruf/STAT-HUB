@@ -1,4 +1,4 @@
-package StatGraphics;
+package src;
 
 /**
  * StatGrphics

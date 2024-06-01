@@ -1,4 +1,4 @@
-package StatGraphics;
+package src;
 
 public class Loading implements StatGraphics {
     public void art() {
