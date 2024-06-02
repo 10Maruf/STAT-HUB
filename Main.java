@@ -664,11 +664,16 @@ public class Main {
                                         "+-----------------------+--------+------------+----------------+----------------+");
 
                                 String tAlpha = (fValueAlpha > fTabel[(nrr - 1) * (mm - 1) - 1][nrr - 2])
-                                        ? "Reject Null Hypothesis for all \\u03B1 [row]."
-                                        : "Fail to reject Null Hypothesis for all \\u03B1 [row].";
+                                        ? "Reject Null Hypothesis for all alpha [row]."
+                                        : "Fail to reject Null Hypothesis for all alpha [row].";
                                 String tBeta = (fValueBeta > fTabel[(nrr - 1) * (mm - 1) - 1][mm - 2])
-                                        ? "Reject Null Hypothesis for all \\u03B2 [column]."
-                                        : "Fail to reject Null Hypothesis for all \\u03B2 [column].";
+                                        ? "Reject Null Hypothesis for all beta [column]."
+                                        : "Fail to reject Null Hypothesis for all beta [column].";
+                                        System.out.println();
+                                        System.out.println(tAlpha);
+                                        System.out.println();
+                                        System.out.println();
+                                        System.out.println(tBeta);
                                 goBack();
                                 break;
                             case 3:// display f-table
