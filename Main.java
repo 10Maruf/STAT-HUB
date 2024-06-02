@@ -1,16 +1,16 @@
 
-
 import java.util.Arrays;
 import java.util.Scanner;
 import StatHub.DescriptiveStat;
 import StatHub.Statistic;
-import src.StatGraphics.Credits;
-import src.StatGraphics.Loading;
-import src.StatGraphics.Welcome;
-import src.StatTable.F_Table;
-import src.StatTable.T_Table;
+import StatGraphics.Credits;
+import StatGraphics.Loading;
+import StatGraphics.Welcome;
+import StatTable.F_Table;
+import StatTable.T_Table;
 import StatHub.HypothesisTesting;
 import StatHub.ANOVA;
+import StatHub.TwoWayWithoutReplication;
 
 public class Main {
     public static void goBack() {
@@ -601,12 +601,12 @@ public class Main {
                                         "| Source of Variation   |   SS   |     df     |       F        |  F crit  |");
                                 System.out.println(
                                         "+-----------------------+--------+------------+----------------+----------+");
-                                System.out.println(String.format("| %-21s | %-6.1f | %-10d | %-14.8f | %-8.3f|",
+                                System.out.println(String.format("| %-21s | %-6.2f | %-10d | %-14.8f | %-8.3f|",
                                         "Between Groups", anova.ssb(), m - 1, oneTS, fTabel[nr * m - m - 1][m - 2]));
-                                System.out.println(String.format("| %-21s | %-6.1f | %-10d |", "Within Groups",
+                                System.out.println(String.format("| %-21s | %-6.2f | %-10d |", "Within Groups",
                                         anova.ssw(), nr * m - m));
                                 System.out.println(
-                                        String.format("| %-21s | %-6.1f | %-10d |", "Total", anova.sst(), m * nr - 1));
+                                        String.format("| %-21s | %-6.2f | %-10d |", "Total", anova.sst(), m * nr - 1));
                                 System.out.println(
                                         "+-----------------------+--------+------------+----------------+----------+");
                                 System.out.println();
@@ -619,9 +619,56 @@ public class Main {
                                 goBack();
                                 break;
                             case 2:// two way
-                                System.out.println("Coming soon....");
-                                System.out.println();
-                                System.out.println("Wait for the next update!");
+                                   // System.out.println("Coming soon....");
+                                   // System.out.println();
+                                   // System.out.println("Wait for the next update!");
+                                System.out.println("Enter Table Row size: ");
+                                int nrr = scanner.nextInt();
+                                cls.cls();
+                                System.out.println("Enter Table Column Size: ");
+                                int mm = scanner.nextInt();
+                                cls.cls();
+                                double[][] array2D = new double[nrr][mm];
+                                System.out.println("Enter the table: ");
+                                array2D = cls.arrayInput(nrr, mm);
+                                cls.cls();
+                                TwoWayWithoutReplication anova2 = new TwoWayWithoutReplication(array2D, nrr, mm);
+                                double twoTSalpha = anova2.twoWayAlpha();
+                                double twoTSbeta = anova2.twoWayBeta();
+                                double fAlpha = anova2.ssr() / (nrr - 1);
+                                double fBeta = anova2.ssc() / (mm - 1);
+                                double fError = anova2.sse() / ((nrr - 1) * (mm - 1));
+                                // F-values
+                                double fValueAlpha = fAlpha / fError;
+                                double fValueBeta = fBeta / fError;
+
+                                // Two way without RepliacationANOVA Table
+                                System.out.println("Two way ANOVA Without Replication");
+                                System.out.println(
+                                        "+-----------------------+--------+------------+----------------+----------------+");
+                                System.out.println(
+                                        "| Source of Variation   |   SS   |     df     |       F        |     F crit     |");
+                                System.out.println(
+                                        "+-----------------------+--------+------------+----------------+----------------+");
+                                System.out.println(String.format("| %-21s | %-6.2f | %-10d | %-14.8f | %-14.8f |",
+                                        "Rows", anova2.ssr(), nrr - 1, fValueAlpha,
+                                        fTabel[(nrr - 1) * (mm - 1) - 1][nrr - 2]));
+                                System.out.println(String.format("| %-21s | %-6.2f | %-10d | %-14.8f | %-14.8f |",
+                                        "Columns", anova2.ssc(), mm - 1, fValueBeta,
+                                        fTabel[(nrr - 1) * (mm - 1) - 1][mm - 2]));
+                                System.out.println(String.format("| %-21s | %-6.2f | %-10d |", "Error", anova2.sse(),
+                                        (nrr - 1) * (mm - 1)));
+                                System.out.println(String.format("| %-21s | %-6.2f | %-10d |", "Total", anova2.sst(),
+                                        nrr * mm - 1));
+                                System.out.println(
+                                        "+-----------------------+--------+------------+----------------+----------------+");
+
+                                String tAlpha = (fValueAlpha > fTabel[(nrr - 1) * (mm - 1) - 1][nrr - 2])
+                                        ? "Reject Null Hypothesis for all \\u03B1 [row]."
+                                        : "Fail to reject Null Hypothesis for all \\u03B1 [row].";
+                                String tBeta = (fValueBeta > fTabel[(nrr - 1) * (mm - 1) - 1][mm - 2])
+                                        ? "Reject Null Hypothesis for all \\u03B2 [column]."
+                                        : "Fail to reject Null Hypothesis for all \\u03B2 [column].";
                                 goBack();
                                 break;
                             case 3:// display f-table

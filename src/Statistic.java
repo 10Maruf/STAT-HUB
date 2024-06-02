@@ -63,6 +63,20 @@ public class Statistic {
         }
         return sum;
     }
+    public double rowSum(int rowIndex) {
+        double sum = 0;
+        for (int j = 0; j < data2D[rowIndex].length; j++) {
+                if (rowIndex >= 0 && rowIndex < data2D.length) {
+                sum += data2D[rowIndex][j];
+            }
+         else {
+            // Handle invalid row index
+            System.out.println("Invalid row index.");
+            return 0;
+        }
+    }
+        return sum;
+    }
 
     public double[] arrayInput(int n) {
         data = new double[n];

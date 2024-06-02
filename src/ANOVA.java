@@ -50,3 +50,4 @@ public class ANOVA extends Statistic {
         return (ssb() / (column - 1)) / (ssw() / (row * column - column));
     }
 }
+
