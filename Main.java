@@ -11,6 +11,7 @@ import StatTable.T_Table;
 import StatHub.HypothesisTesting;
 import StatHub.ANOVA;
 import StatHub.TwoWayWithoutReplication;
+import StatMfunction.Mfunction;
 
 public class Main {
     public static void goBack() {
@@ -311,12 +312,19 @@ public class Main {
                                                     nullHypothesis,
                                                     populationStandardDeviation, size);
                                             double zScore = hypo.zTest();
+                                            Mfunction m1 = new Mfunction();
                                             cls.cls();
-                                            if (tTabel[30][table.column(sLevel)] > zScore) {
+                                            if (tTabel[30][table.column(sLevel)] > Math.abs(zScore)) {
+                                                System.out.println("P-value: " + m1.hypo_CDF(zScore));
                                                 System.out.println("Fail to reject Null Hypothesis.");
+                                                System.out.println(zScore);
 
-                                            } else
+                                            } else {
+                                                System.out.println("P-value: " + m1.hypo_CDF(zScore));
                                                 System.out.println("Reject Null Hypothesis");
+                                                System.out.println(zScore);
+                                            }
+
                                             goBack();
                                             break;
                                         case 2:// population not given
@@ -351,12 +359,18 @@ public class Main {
                                                         System.out.println("Enter Significance Level in % : ");
                                                         String sigLevel = scanner.nextLine();
                                                         double tTest = hypodata.zTest();
+                                                        Mfunction m2 = new Mfunction();
                                                         cls.cls();
-                                                        if (tTabel[ssize - 2][table.column(sigLevel)] > tTest) {
+                                                        if (tTabel[ssize - 2][table.column(sigLevel)] > Math
+                                                                .abs(tTest)) {
+                                                            System.out.println("P-value: " + m2.hypo_CDF(tTest));
                                                             System.out.println("Fail to reject Null Hypothesis.");
 
-                                                        } else
+                                                        } else {
+                                                            System.out.println("P-value: " + m2.hypo_CDF(tTest));
+
                                                             System.out.println("Reject Null Hypothesis");
+                                                        }
                                                         goBack();
                                                         break;
                                                     case 2:// not given
@@ -381,12 +395,18 @@ public class Main {
                                                                 nullHypothesis2,
                                                                 populationStandardDeviation2, size2);
                                                         double zScore2 = hypo2.zTest();
+                                                        Mfunction m12 = new Mfunction();
                                                         cls.cls();
-                                                        if (tTabel[size2 - 2][table.column(sLevel2)] > zScore2) {
+                                                        if (tTabel[size2 - 2][table.column(sLevel2)] > Math
+                                                                .abs(zScore2)) {
+                                                            System.out.println("P-value: " + m12.hypo_CDF(zScore2));
                                                             System.out.println("Fail to reject Null Hypothesis.");
 
-                                                        } else
+                                                        } else {
+                                                            System.out.println("P-value: " + m12.hypo_CDF(zScore2));
+
                                                             System.out.println("Reject Null Hypothesis");
+                                                        }
                                                         goBack();
                                                         break;
                                                     case 3:
@@ -447,12 +467,29 @@ public class Main {
                                                     nullHypothesis2,
                                                     populationStandardDeviation2, size2);
                                             double zScore2 = hypo2.zTest();
+                                            Mfunction m22 = new Mfunction();
                                             cls.cls();
-                                            if (tTabel[30][table.column(sLevel2) + 1] < zScore2) {
+                                            double pValue;
+                                            if (tTabel[30][table.column(sLevel2) + 1] < Math.abs(zScore2)) {
+                                                if (zScore2 > 0) {
+                                                    pValue = 2 * (1 - m22.hypo_CDF(zScore2));
+                                                } else {
+                                                    pValue = 2 * m22.hypo_CDF(zScore2);
+                                                }
+
+                                                System.out.println("P-value: " + pValue);
                                                 System.out.println("Fail to reject Null Hypothesis.");
 
-                                            } else
+                                            } else {
+                                                if (zScore2 > 0) {
+                                                    pValue = 2 * (1 - m22.hypo_CDF(zScore2));
+                                                } else {
+                                                    pValue = 2 * m22.hypo_CDF(zScore2);
+                                                }
+
+                                                System.out.println("P-value: " + pValue);
                                                 System.out.println("Reject Null Hypothesis");
+                                            }
                                             goBack();
                                             break;
                                         case 2:// population not given
@@ -487,12 +524,30 @@ public class Main {
                                                         System.out.println("Enter Significance Level in % : ");
                                                         String sigLevel2 = scanner.nextLine();
                                                         double tTest2 = hypodata2.zTest();
+                                                        // double pValue;
+                                                        Mfunction m23 = new Mfunction();
                                                         cls.cls();
-                                                        if (tTabel[ssize2 - 2][table.column(sigLevel2) + 1] < tTest2) {
+                                                        if (tTabel[ssize2 - 2][table.column(sigLevel2) + 1] < Math
+                                                                .abs(tTest2)) {
+                                                            if (tTest2 > 0) {
+                                                                pValue = 2 * (1 - m23.hypo_CDF(tTest2));
+                                                            } else {
+                                                                pValue = 2 * m23.hypo_CDF(tTest2);
+                                                            }
+
+                                                            System.out.println("P-value: " + pValue);
                                                             System.out.println("Fail to reject Null Hypothesis.");
 
-                                                        } else
+                                                        } else {
+                                                            if (tTest2 > 0) {
+                                                                pValue = 2 * (1 - m23.hypo_CDF(tTest2));
+                                                            } else {
+                                                                pValue = 2 * m23.hypo_CDF(tTest2);
+                                                            }
+
+                                                            System.out.println("P-value: " + pValue);
                                                             System.out.println("Reject Null Hypothesis");
+                                                        }
                                                         goBack();
                                                         break;
                                                     case 2:// not given
@@ -517,12 +572,30 @@ public class Main {
                                                                 nullHypothesis22,
                                                                 populationStandardDeviation22, size22);
                                                         double zScore22 = hypo22.zTest();
+                                                        // double pValue;
+                                                        Mfunction m24 = new Mfunction();
                                                         cls.cls();
-                                                        if (tTabel[size22 - 2][table.column(sLevel22) + 1] < zScore22) {
+                                                        if (tTabel[size22 - 2][table.column(sLevel22) + 1] < Math
+                                                                .abs(zScore22)) {
+                                                            if (zScore22 > 0) {
+                                                                pValue = 2 * (1 - m24.hypo_CDF(zScore22));
+                                                            } else {
+                                                                pValue = 2 * m24.hypo_CDF(zScore22);
+                                                            }
+
+                                                            System.out.println("P-value: " + pValue);
                                                             System.out.println("Fail to reject Null Hypothesis.");
 
-                                                        } else
+                                                        } else {
+                                                            if (zScore22 > 0) {
+                                                                pValue = 2 * (1 - m24.hypo_CDF(zScore22));
+                                                            } else {
+                                                                pValue = 2 * m24.hypo_CDF(zScore22);
+                                                            }
+
+                                                            System.out.println("P-value: " + pValue);
                                                             System.out.println("Reject Null Hypothesis");
+                                                        }
                                                         goBack();
                                                         break;
                                                     case 3:
@@ -592,6 +665,8 @@ public class Main {
                                 cls.cls();
                                 ANOVA anova = new ANOVA(array2d, nr, m);
                                 double oneTS = anova.oneWay();
+                                Mfunction am1 = new Mfunction();
+                                double F_pValue = 1 - am1.F_dis_CDF(oneTS, m - 1, nr * m - m);
 
                                 // ANOVA Table
                                 System.out.println("ANOVA");
@@ -610,6 +685,7 @@ public class Main {
                                 System.out.println(
                                         "+-----------------------+--------+------------+----------------+----------+");
                                 System.out.println();
+                                System.out.println("P-value: " + F_pValue);
                                 // Output based on the condition
                                 String hypothesisResult = (fTabel[nr * m - m - 1][m - 2] > oneTS)
                                         ? "Fail to reject Null Hypothesis."
@@ -641,6 +717,10 @@ public class Main {
                                 // F-values
                                 double fValueAlpha = fAlpha / fError;
                                 double fValueBeta = fBeta / fError;
+                                // p-value
+                                Mfunction am2 = new Mfunction();
+                                double F_pValueAlpha = 1 - am2.F_dis_CDF(fValueAlpha, nrr - 1, (nrr - 1) * (mm - 1));
+                                double F_pValueBeta = 1 - am2.F_dis_CDF(fValueBeta, mm - 1, (nrr - 1) * (mm - 1));
 
                                 // Two way without RepliacationANOVA Table
                                 System.out.println("Two way ANOVA Without Replication");
@@ -669,11 +749,14 @@ public class Main {
                                 String tBeta = (fValueBeta > fTabel[(nrr - 1) * (mm - 1) - 1][mm - 2])
                                         ? "Reject Null Hypothesis for all beta [column]."
                                         : "Fail to reject Null Hypothesis for all beta [column].";
-                                        System.out.println();
-                                        System.out.println(tAlpha);
-                                        System.out.println();
-                                        System.out.println();
-                                        System.out.println(tBeta);
+                                System.out.println();
+                                System.out.println(tAlpha);
+                                System.out.println("P-value(Alpha): " + F_pValueAlpha);
+                                System.out.println();
+                                System.out.println();
+                                System.out.println(tBeta);
+                                System.out.println("P-value(Beta): " + F_pValueBeta);
+
                                 goBack();
                                 break;
                             case 3:// display f-table

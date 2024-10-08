@@ -19,13 +19,18 @@ public class HypothesisTesting extends DescriptiveStat {
             int size) {
         super(sampleData);
         this.populationMean = populationMean;
+        this.nullHypothesis=nullHypothesis;
         this.populationStandardDeviation = populationStandardDeviation;
         // this.significanceLevel = significanceLevel;
         this.size = size;
     }
 
-    public double zTest() {// method zTest
-        return Math.abs(((populationMean - nullHypothesis) * Math.sqrt(size)) / populationStandardDeviation);
+    public double zTest() {
+        double standardError = populationStandardDeviation / Math.sqrt(size);
+        double zScore =  ((populationMean - nullHypothesis) / standardError);
+        // System.out.println("!!!");
+        return zScore;
     }
+    
     
 }
