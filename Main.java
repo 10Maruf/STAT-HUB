@@ -6,12 +6,15 @@ import StatHub.Statistic;
 import StatGraphics.Credits;
 import StatGraphics.Loading;
 import StatGraphics.Welcome;
+import StatTable.Chisqr_Table;
 import StatTable.F_Table;
 import StatTable.T_Table;
+import StatTable.Chisqr_Table;
 import StatHub.HypothesisTesting;
 import StatHub.ANOVA;
 import StatHub.TwoWayWithoutReplication;
 import StatMfunction.Mfunction;
+import StatHub.ChiSquare;
 
 public class Main {
     public static void goBack() {
@@ -51,8 +54,9 @@ public class Main {
             System.out.println("1. Descriptive statistics");
             System.out.println("2. Hypothesis testing");
             System.out.println("3. ANOVA");
-            System.out.println("4. Credits");
-            System.out.println("5. Exit");
+            System.out.println("4. Chi-Square");
+            System.out.println("5. Credits");
+            System.out.println("6. Exit");
 
             // Read user input for main menu
             System.out.println("Enter Choice: ");
@@ -632,6 +636,7 @@ public class Main {
 
                         }
                     }
+                    break;
                 case 3:
                     // Display ANOVA menu
                     String fTableFile = "E:\\.Programming\\STAT HUB\\src\\f_table.txt"; // F- table file location
@@ -775,12 +780,146 @@ public class Main {
                         }
                     }
                     break;
-                case 4:// credits
+                case 4: // Chi-Square
+                    // Chi-Square submenu logic
+                    String chisqrTableFile = "E:\\.Programming\\STAT HUB\\src\\chisqr_table.txt"; // Chisqr- table file
+                                                                                                  // location
+
+                    Chisqr_Table chisqrTable = new Chisqr_Table();
+                    double[][] chiTable = chisqrTable.readTable(chisqrTableFile);
+                    backToMain = false;
+                    while (!backToMain) {
+                        cls.cls(); // Clear screen
+                        System.out.println("Chi-Square Menu");
+                        System.out.println("1. Test of Independence");
+                        System.out.println("2. Goodness-of-Fit");
+                        System.out.println("3. Display Chi-Sqr Table");
+                        System.out.println("4. Back to main menu");
+                        System.out.println("Enter Choice: ");
+
+                        int chiSquareChoice = scanner.nextInt(); // User input
+                        cls.cls();
+
+                        switch (chiSquareChoice) {
+                            case 1: // Chi-Square Test of Independence
+                                // Input table dimensions
+                                System.out.print("Enter number of rows: ");
+                                int rows = scanner.nextInt();
+                                cls.cls();
+
+                                System.out.print("Enter number of columns: ");
+                                int cols = scanner.nextInt();
+                                cls.cls();
+
+                                // Initialize observed frequency array
+                                double[][] observed = new double[rows][cols];
+
+                                scanner.nextLine(); // Consume newline character
+                                System.out.println("Enter the Significance Level in % : ");
+                                String chisLevel = scanner.nextLine();
+                                cls.cls();
+                                // Input observed frequencies
+                                System.out.println("Enter the observed frequencies Table: ");
+                                for (int i = 0; i < rows; i++) {
+                                    for (int j = 0; j < cols; j++) {
+                                        observed[i][j] = scanner.nextDouble();
+                                    }
+                                }
+                                cls.cls();
+
+                                // Calculate totals
+                                int[] totalRows = new int[rows];
+                                int[] totalCols = new int[cols];
+                                int grandTotal = 0;
+
+                                for (int i = 0; i < rows; i++) {
+                                    for (int j = 0; j < cols; j++) {
+                                        totalRows[i] += observed[i][j];
+                                        totalCols[j] += observed[i][j];
+                                        grandTotal += observed[i][j];
+                                    }
+                                }
+
+                                ChiSquare independenChiSquare = new ChiSquare();
+
+                                // Calculate expected frequencies
+                                double[][] expected = independenChiSquare.calculateExpected(observed, totalRows,
+                                        totalCols, grandTotal);
+
+                                // Perform the Chi-Square Test
+                                double chiSquareValue = independenChiSquare.testOfIndependence(observed, expected);
+                                cls.cls();
+
+                                // Degrees of freedom
+                                int df = (rows - 1) * (cols - 1);
+
+                                // Ensure df is within bounds
+                                if (df <= 0 || df >= chiTable.length) {
+                                    System.out.println("Invalid degrees of freedom: " + df);
+                                    goBack();
+                                    break;
+                                }
+
+                                // Get the column index based on significance level
+                                int colIndex = chisqrTable.column(chisLevel);
+
+                                // Check if the column index is valid
+                                if (colIndex == -1 || colIndex >= chiTable[0].length) {
+                                    System.out.println("Invalid significance level: " + chisLevel);
+                                    goBack();
+                                    break;
+                                }
+
+                                // Display Chi-Square value
+                                System.out.println("Chi-Square Value: " + chiSquareValue);
+
+                                // Compare the chi-square value with the critical value
+                                double criticalValue = chiTable[df - 1][colIndex];
+                                if (criticalValue > chiSquareValue) {
+                                    System.out.println("P-value: ");
+                                    System.out.println("Critical Value: " + criticalValue);
+                                    System.out.println("Fail to reject Null Hypothesis.");
+                                } else {
+                                    System.out.println("P-value: ");
+                                    System.out.println("Critical Value: " + criticalValue);
+                                    System.out.println("Reject Null Hypothesis");
+                                }
+
+                                goBack();
+                                break;
+
+                            case 2: // Goodness-of-Fit
+                                System.out.println("Goodness-of-Fit");
+                                // Add code to handle the Goodness-of-Fit test, possibly reading observed values
+                                // and comparing them to the expected distribution.
+                                // Example: chiSquare.calculateGoodnessOfFit(observed, expected);
+
+                                // Display the result and hypothesis conclusion
+                                goBack();
+                                break;
+                            case 3:// display chisqr-table
+                                cls.cls();
+                                chisqrTable.displayTable(chiTable);
+                                goBack();
+                                break;
+                            case 4: // Back to main menu
+                                backToMain = true;
+                                break;
+
+                            default:
+                                System.out.println("Invalid Choice!!");
+                                goBack();
+                                break;
+                        }
+                    }
+                    break;
+
+                case 5:// credits
                     creditsGraphics.art();
                     goBack();
                     cls.cls();
                     break;
-                case 5:
+                case 0:
                     // Exit program
                     exitProgram = true;
                     break;
