@@ -784,7 +784,7 @@ public class Main {
                     // Chi-Square submenu logic
                     String chisqrTableFile = "E:\\.Programming\\STAT HUB\\src\\chisqr_table.txt"; // Chisqr- table file
                                                                                                   // location
-
+                    Mfunction chisqrCDF = new Mfunction();
                     Chisqr_Table chisqrTable = new Chisqr_Table();
                     double[][] chiTable = chisqrTable.readTable(chisqrTableFile);
                     backToMain = false;
@@ -876,11 +876,11 @@ public class Main {
                                 // Compare the chi-square value with the critical value
                                 double criticalValue = chiTable[df - 1][colIndex];
                                 if (criticalValue > chiSquareValue) {
-                                    System.out.println("P-value: ");
+                                    System.out.println("P-value: " + (1 - chisqrCDF.chisqr_CDF(chiSquareValue,df)));
                                     System.out.println("Critical Value: " + criticalValue);
                                     System.out.println("Fail to reject Null Hypothesis.");
                                 } else {
-                                    System.out.println("P-value: ");
+                                    System.out.println("P-value: " + (1 - chisqrCDF.chisqr_CDF(chiSquareValue,df)));
                                     System.out.println("Critical Value: " + criticalValue);
                                     System.out.println("Reject Null Hypothesis");
                                 }
