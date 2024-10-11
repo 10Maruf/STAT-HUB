@@ -9,6 +9,7 @@ STAT HUB is a Java application developed as part of the Object Oriented Concepts
 - **Descriptive Statistics** 
 - **Hypothesis Testing**
 - **ANOVA (Analysis of Variance)**
+- **Chi-Square Test**
 - **Regression Analysis**
 
 ## Installation
