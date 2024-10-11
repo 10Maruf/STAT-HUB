@@ -876,11 +876,11 @@ public class Main {
                                 // Compare the chi-square value with the critical value
                                 double criticalValue = chiTable[df - 1][colIndex];
                                 if (criticalValue > chiSquareValue) {
-                                    System.out.println("P-value: " + (1 - chisqrCDF.chisqr_CDF(chiSquareValue,df)));
+                                    System.out.println("P-value: " + (1 - chisqrCDF.chisqr_CDF(chiSquareValue, df)));
                                     System.out.println("Critical Value: " + criticalValue);
                                     System.out.println("Fail to reject Null Hypothesis.");
                                 } else {
-                                    System.out.println("P-value: " + (1 - chisqrCDF.chisqr_CDF(chiSquareValue,df)));
+                                    System.out.println("P-value: " + (1 - chisqrCDF.chisqr_CDF(chiSquareValue, df)));
                                     System.out.println("Critical Value: " + criticalValue);
                                     System.out.println("Reject Null Hypothesis");
                                 }
@@ -889,12 +889,108 @@ public class Main {
                                 break;
 
                             case 2: // Goodness-of-Fit
-                                System.out.println("Goodness-of-Fit");
-                                // Add code to handle the Goodness-of-Fit test, possibly reading observed values
-                                // and comparing them to the expected distribution.
-                                // Example: chiSquare.calculateGoodnessOfFit(observed, expected);
+                                // System.out.println("Goodness of Fit");
+                                System.out.print("Enter the number of categories: ");
+                                int numCategories = scanner.nextInt();
+                                double[] observedGOF = new double[numCategories];
+                                double[] expectedGOF = new double[numCategories];
+                                cls.cls();
+                                scanner.nextLine(); // Consume newline character
+                                System.out.println("Enter the observed frequencies:");
+                                for (int i = 0; i < numCategories; i++) {
+                                    // System.out.print("Observed[" + (i + 1) + "]: ");
+                                    observedGOF[i] = scanner.nextDouble();
+                                }
+                                cls.cls();
+                                double grandTotalGOF = 0.0;// calculate grand total
+                                for (int i = 0; i < observedGOF.length; i++) {
+                                    grandTotalGOF += observedGOF[i];
+                                }
+                                System.out.println("Select the method for expected values:");
+                                System.out.println("1. Know expected values");
+                                System.out.println("2. Know proportions or probability");
+                                System.out.println("3. All proportions are equal");
+                                System.out.println("4. Calculate expected values using Poisson distribution");
+                                System.out.println();
+                                System.out.println("Enter Choice:");
+                                int methodChoice = scanner.nextInt();
+                                cls.cls();
 
-                                // Display the result and hypothesis conclusion
+                                ChiSquare chiSquare = new ChiSquare();
+                                double chisqrValue;
+
+                                switch (methodChoice) {
+                                    case 1: // Known expected values
+                                        System.out.println("Enter the expected values:");
+                                        for (int i = 0; i < numCategories; i++) {
+                                            // System.out.print("Expected[" + (i + 1) + "]: ");
+                                            expectedGOF[i] = scanner.nextDouble();
+                                        }
+                                        chisqrValue = chiSquare.testOfGoodnessOfFit(observedGOF, expectedGOF);
+                                        break;
+
+                                    case 2: // Known proportions
+                                        // System.out.println("Enter the total count:");
+                                        // double total = scanner.nextDouble();
+                                        System.out.println("Enter the proportions (space-separated):");
+                                        double[] proportions = new double[numCategories];
+                                        for (int i = 0; i < numCategories; i++) {
+                                            // System.out.print("Proportion[" + (i + 1) + "]: ");
+                                            proportions[i] = scanner.nextDouble();
+                                        }
+                                        expectedGOF = chiSquare.calculateExpectedFromProportions(observedGOF,
+                                                grandTotalGOF,
+                                                proportions);
+                                        chisqrValue = chiSquare.testOfGoodnessOfFit(observedGOF, expectedGOF);
+                                        break;
+
+                                    case 3: // All proportions are equal
+                                        expectedGOF = chiSquare.calculateExpectedEqualProportions(observedGOF);
+                                        chisqrValue = chiSquare.testOfGoodnessOfFit(observedGOF, expectedGOF);
+                                        break;
+
+                                    case 4: // Using Poisson distribution
+                                        System.out.println("Enter the mean (lambda) for Poisson distribution:");
+                                        double lambda = scanner.nextDouble();
+                                        expectedGOF = chiSquare.calculateExpectedFromPoisson(observedGOF, lambda,
+                                                grandTotalGOF);
+                                        chisqrValue = chiSquare.testOfGoodnessOfFit(observedGOF, expectedGOF);
+                                        break;
+
+                                    default:
+                                        System.out.println("Invalid option selected.");
+                                        continue;
+                                }
+                                cls.cls();
+                                scanner.nextLine(); // Consume newline character
+                                System.out.println("Enter the Significance Level in % : ");
+                                String chisLevel2 = scanner.nextLine();
+                                // cls.cls();
+                                cls.cls();
+                                // Degrees of freedom
+                                int dfGoodness = numCategories - 1;
+
+                                int colIndexGoodness = chisqrTable.column(chisLevel2);
+
+                                if (colIndexGoodness == -1 || colIndexGoodness >= chiTable[0].length) {
+                                    System.out.println("Invalid significance level: " + chisLevel2);
+                                    goBack();
+                                    break;
+                                }
+                                System.out.println("Chi-Square Value: " + chisqrValue);
+
+                                double criticalValueGoodness = chiTable[dfGoodness][colIndexGoodness];
+                                if (criticalValueGoodness > chisqrValue) {
+                                    System.out
+                                            .println("P-value: " + (1 - chisqrCDF.chisqr_CDF(chisqrValue, dfGoodness)));
+                                    System.out.println("Critical Value: " + criticalValueGoodness);
+                                    System.out.println("Fail to reject Null Hypothesis.");
+                                } else {
+                                    System.out
+                                            .println("P-value: " + (1 - chisqrCDF.chisqr_CDF(chisqrValue, dfGoodness)));
+                                    System.out.println("Critical Value: " + criticalValueGoodness);
+                                    System.out.println("Reject Null Hypothesis.");
+                                }
                                 goBack();
                                 break;
                             case 3:// display chisqr-table
