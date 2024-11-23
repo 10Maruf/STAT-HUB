@@ -15,6 +15,7 @@ import StatHub.ANOVA;
 import StatHub.TwoWayWithoutReplication;
 import StatMfunction.Mfunction;
 import StatHub.ChiSquare;
+import StatHub.SimpleLinearRegression;
 
 public class Main {
     public static void goBack() {
@@ -55,8 +56,9 @@ public class Main {
             System.out.println("2. Hypothesis testing");
             System.out.println("3. ANOVA");
             System.out.println("4. Chi-Square");
-            System.out.println("5. Credits");
-            System.out.println("6. Exit");
+            System.out.println("5. Regression Analysis");
+            System.out.println("6. Credits");
+            System.out.println("0. Exit");
 
             // Read user input for main menu
             System.out.println("Enter Choice: ");
@@ -811,7 +813,6 @@ public class Main {
                                 int cols = scanner.nextInt();
                                 cls.cls();
 
-                                // Initialize observed frequency array
                                 double[][] observed = new double[rows][cols];
 
                                 scanner.nextLine(); // Consume newline character
@@ -846,34 +847,28 @@ public class Main {
                                 double[][] expected = independenChiSquare.calculateExpected(observed, totalRows,
                                         totalCols, grandTotal);
 
-                                // Perform the Chi-Square Test
                                 double chiSquareValue = independenChiSquare.testOfIndependence(observed, expected);
                                 cls.cls();
 
                                 // Degrees of freedom
                                 int df = (rows - 1) * (cols - 1);
 
-                                // Ensure df is within bounds
                                 if (df <= 0 || df >= chiTable.length) {
                                     System.out.println("Invalid degrees of freedom: " + df);
                                     goBack();
                                     break;
                                 }
 
-                                // Get the column index based on significance level
                                 int colIndex = chisqrTable.column(chisLevel);
 
-                                // Check if the column index is valid
                                 if (colIndex == -1 || colIndex >= chiTable[0].length) {
                                     System.out.println("Invalid significance level: " + chisLevel);
                                     goBack();
                                     break;
                                 }
 
-                                // Display Chi-Square value
                                 System.out.println("Chi-Square Value: " + chiSquareValue);
 
-                                // Compare the chi-square value with the critical value
                                 double criticalValue = chiTable[df - 1][colIndex];
                                 if (criticalValue > chiSquareValue) {
                                     System.out.println("P-value: " + (1 - chisqrCDF.chisqr_CDF(chiSquareValue, df)));
@@ -1010,7 +1005,83 @@ public class Main {
                     }
                     break;
 
-                case 5:// credits
+                case 5: // Regression Analysis
+                    backToMain = false;
+                    while (!backToMain) {
+                        cls.cls(); // Clear screen
+                        System.out.println("Regression Analysis Menu");
+                        System.out.println("1. Linear Regression");
+                        System.out.println("2. Polynomial Regression");
+                        System.out.println("3. Back to main menu");
+                        System.out.println("Enter Choice: ");
+
+                        int regressionChoice = scanner.nextInt();
+                        cls.cls();
+
+                        switch (regressionChoice) {
+                            case 1: // Linear Regression
+                                boolean backToLinear = false;
+                                while (!backToLinear) {
+                                    cls.cls();
+                                    System.out.println("Linear Regression Menu");
+                                    System.out.println("1. Simple Linear Regression");
+                                    System.out.println("2. Multiple Linear Regression");
+                                    System.out.println("3. Back to Regression Analysis Menu");
+                                    System.out.println("Enter Choice: ");
+
+                                    int linearChoice = scanner.nextInt();
+                                    cls.cls();
+
+                                    switch (linearChoice) {
+                                        case 1:
+                                            System.out.println("Enter the number of data points: ");
+                                            int nSLR = scanner.nextInt();
+                                            cls.cls();
+                                            double[][] tableSLR = new double[nSLR][2];
+
+                                            System.out.println("Enter the data points tableSLR (x y):");
+                                            for (int i = 0; i < nSLR; i++) {
+                                                // System.out.printf("Data Point %d: ", i + 1);
+                                                tableSLR[i][0] = scanner.nextDouble(); // x
+                                                tableSLR[i][1] = scanner.nextDouble(); // y
+                                            }
+                                            cls.cls();
+                                            SimpleLinearRegression slr = new SimpleLinearRegression(tableSLR);
+                                            slr.displayResults();
+                                            goBack();
+                                            break;
+
+                                        case 2: // Multiple Linear Regression
+                                            System.out.println("Performing Multiple Linear Regression...");
+                                            // Add logic for data input and calculation
+                                            break;
+
+                                        case 3: // Back to Regression Analysis Menu
+                                            backToLinear = true;
+                                            break;
+
+                                        default:
+                                            System.out.println("Invalid choice. Try again.");
+                                    }
+                                }
+                                break;
+
+                            case 2: // Polynomial Regression
+                                System.out.println("Performing Polynomial Regression...");
+                                // Add logic for data input and calculation
+                                break;
+
+                            case 3: // Back to Main Menu
+                                backToMain = true;
+                                break;
+
+                            default:
+                                System.out.println("Invalid choice. Try again.");
+                        }
+                    }
+                    break;
+
+                case 6:// credits
                     creditsGraphics.art();
                     goBack();
                     cls.cls();
