@@ -16,6 +16,7 @@ import StatHub.TwoWayWithoutReplication;
 import StatMfunction.Mfunction;
 import StatHub.ChiSquare;
 import StatHub.SimpleLinearRegression;
+import StatHub.MultipleLinearRegression;
 
 public class Main {
     public static void goBack() {
@@ -1052,11 +1053,43 @@ public class Main {
                                             break;
 
                                         case 2: // Multiple Linear Regression
-                                            System.out.println("Performing Multiple Linear Regression...");
-                                            // Add logic for data input and calculation
+                                            //////////////////////////////
+                                            System.out.print("Enter the number of rows (observations): ");
+                                            int rowsMLR = scanner.nextInt();
+                                            cls.cls();
+                                            System.out.print(
+                                                    "Enter the number of columns (predictors + 1 for response): ");
+                                            int colsMLR = scanner.nextInt();
+                                            cls.cls();
+
+                                            double[][] tableMLR = new double[rowsMLR][colsMLR];
+
+                                            System.out.println("Enter the table (last column is Y): ");
+                                            for (int i = 0; i < rowsMLR; i++) {
+                                                // System.out.print("Row " + (i + 1) + ": ");
+                                                for (int j = 0; j < colsMLR; j++) {
+                                                    tableMLR[i][j] = scanner.nextDouble();
+                                                }
+                                            }
+                                            cls.cls();
+                                            double[][] predictors = new double[rowsMLR][colsMLR - 1];
+                                            double[] response = new double[rowsMLR];
+
+                                            for (int i = 0; i < rowsMLR; i++) {
+                                                for (int j = 0; j < colsMLR - 1; j++) {
+                                                    predictors[i][j] = tableMLR[i][j];
+                                                }
+                                                response[i] = tableMLR[i][colsMLR - 1];
+                                            }
+
+                                            MultipleLinearRegression mlr = new MultipleLinearRegression(predictors,
+                                                    response);
+                                            mlr.displayResults();
+                                            goBack();
+
                                             break;
 
-                                        case 3: // Back to Regression Analysis Menu
+                                        case 3:
                                             backToLinear = true;
                                             break;
 
