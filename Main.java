@@ -17,6 +17,7 @@ import StatMfunction.Mfunction;
 import StatHub.ChiSquare;
 import StatHub.SimpleLinearRegression;
 import StatHub.MultipleLinearRegression;
+import StatHub.PolynomialRegression;
 
 public class Main {
     public static void goBack() {
@@ -1100,8 +1101,29 @@ public class Main {
                                 break;
 
                             case 2: // Polynomial Regression
-                                System.out.println("Performing Polynomial Regression...");
-                                // Add logic for data input and calculation
+                                System.out.println("Enter the degree of the polynomial:");
+                                int degreePR = scanner.nextInt();
+                                cls.cls();
+
+                                System.out.println("Enter the number of data points:");
+                                int nPR = scanner.nextInt();
+                                double[] xPR = new double[nPR];
+                                double[] yPR = new double[nPR];
+                                cls.cls();
+
+                                System.out.println("Enter the data points (x y) separated by space:");
+                                for (int i = 0; i < nPR; i++) {
+                                    // System.out.printf("Data point %d: ", i + 1);
+                                    xPR[i] = scanner.nextDouble();
+                                    yPR[i] = scanner.nextDouble();
+                                }
+                                cls.cls();
+
+                                PolynomialRegression model = new PolynomialRegression(degreePR);
+                                model.fit(xPR, yPR);
+
+                                model.displayResults(xPR, yPR);
+                                goBack();
                                 break;
 
                             case 3: // Back to Main Menu
