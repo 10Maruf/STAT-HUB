@@ -18,6 +18,7 @@ import StatHub.ChiSquare;
 import StatHub.SimpleLinearRegression;
 import StatHub.MultipleLinearRegression;
 import StatHub.PolynomialRegression;
+import StatFile.FileUtils;
 
 public class Main {
     public static void goBack() {
@@ -70,12 +71,18 @@ public class Main {
             switch (mainMenuChoice) {
                 case 1:
                     // input sample
-                    System.out.println("Enter the sample size: ");
-                    int n = scanner.nextInt();
-                    double data[] = new double[n];
+                    // System.out.println("Enter the sample size: ");
+                    System.out.println("Enter the file path of .csv/.txt file: ");
+                    scanner.nextLine();
+                    String f1Path = scanner.nextLine();
+                    FileUtils f1 = new FileUtils();
+                    // int n = scanner.nextInt();
+                    Object f1DataArr = f1.readDataFromFile(f1Path);
+                    double data[] = ((double[]) f1DataArr);
+                    int n = f1.getColumnCount();
                     cls.cls();
-                    System.out.println("Enter the elements: ");
-                    data = cls.arrayInput(n);
+                    // System.out.println("Enter the elements: ");
+                    // data = cls.arrayInput(n);
                     DescriptiveStat stat = new DescriptiveStat(data);
                     boolean backToMain = false;
                     // Display Descriptive Stat menu
@@ -216,9 +223,9 @@ public class Main {
                                 System.out.println("+-----------------------+-----------------------+");
                                 System.out.println("|      Data Size        |     " + String.format("%-21d", n) + "|");
                                 System.out.println("+-----------------------+-----------------------+");
-                                System.out.println("|      Data Elements    | "
-                                        + String.format("%-21s", Arrays.toString(stat.getData())) + " |");
-                                System.out.println("+-----------------------+-----------------------+");
+                                // System.out.println("| Data Elements | "
+                                // + String.format("%-21s", Arrays.toString(stat.getData())) + " |");
+                                // System.out.println("+-----------------------+-----------------------+");
                                 System.out.println(
                                         "|        Mean           |     " + String.format("%-21.2f", stat.mean()) + "|");
                                 System.out.println("+-----------------------+-----------------------+");
@@ -310,6 +317,7 @@ public class Main {
                                             double populationStandardDeviation = scanner.nextDouble();
                                             cls.cls();
                                             System.out.println("Enter Sample Size: ");
+
                                             int size = scanner.nextInt();
                                             cls.cls();
                                             scanner.nextLine(); // Consume newline character
@@ -352,14 +360,20 @@ public class Main {
                                                         System.out.println("Enter Null Hypothesis: ");
                                                         double nH = scanner.nextDouble();
                                                         cls.cls();
-                                                        System.out.println("Enter sample size: ");
-                                                        int ssize = scanner.nextInt();
-                                                        double hypoData[] = new double[ssize];
+                                                        // System.out.println("Enter sample size: ");
+                                                        System.out.println(
+                                                                "Enter the Sample file path of .csv/.txt file: ");
+                                                        scanner.nextLine();
+                                                        String f2Path = scanner.nextLine();
+                                                        FileUtils f2 = new FileUtils();
+                                                        Object f2DataArr = f2.readDataFromFile(f2Path);
+                                                        double hypoData[] = (double[]) f2DataArr;
+                                                        int ssize = f2.getColumnCount();
                                                         cls.cls();
-                                                        System.out.println("Enter Sample elements: ");
+                                                        // System.out.println("Enter Sample elements: ");
                                                         DescriptiveStat inhypodata = new DescriptiveStat(hypoData);
-                                                        hypoData = inhypodata.arrayInput(ssize);
-                                                        scanner.nextLine(); // Consume newline character
+                                                        // hypoData = inhypodata.arrayInput(ssize);
+                                                        // scanner.nextLine(); // Consume newline character
                                                         HypothesisTesting hypodata = new HypothesisTesting(hypoData,
                                                                 inhypodata.mean(), nH,
                                                                 inhypodata.sampleStandardDeviation(), ssize);
@@ -369,6 +383,10 @@ public class Main {
                                                         double tTest = hypodata.zTest();
                                                         Mfunction m2 = new Mfunction();
                                                         cls.cls();
+                                                        if (ssize > 30) {
+                                                            ssize = 30;
+
+                                                        }
                                                         if (tTabel[ssize - 2][table.column(sigLevel)] > Math
                                                                 .abs(tTest)) {
                                                             System.out.println("P-value: " + m2.hypo_CDF(tTest));
@@ -405,6 +423,10 @@ public class Main {
                                                         double zScore2 = hypo2.zTest();
                                                         Mfunction m12 = new Mfunction();
                                                         cls.cls();
+                                                        if (size2 > 30) {
+                                                            size2 = 30;
+
+                                                        }
                                                         if (tTabel[size2 - 2][table.column(sLevel2)] > Math
                                                                 .abs(zScore2)) {
                                                             System.out.println("P-value: " + m12.hypo_CDF(zScore2));
@@ -517,13 +539,19 @@ public class Main {
                                                         System.out.println("Enter Null Hypothesis: ");
                                                         double nH2 = scanner.nextDouble();
                                                         cls.cls();
-                                                        System.out.println("Enter sample size: ");
-                                                        int ssize2 = scanner.nextInt();
-                                                        double hypoData2[] = new double[ssize2];
+                                                        // System.out.println("Enter sample size: ");
+                                                        System.out.println(
+                                                                "Enter the Sample file path of .csv/.txt file: ");
+                                                        scanner.nextLine();
+                                                        String f3Path = scanner.nextLine();
+                                                        FileUtils f3 = new FileUtils();
+                                                        Object f3DataArr = f3.readDataFromFile(f3Path);
+                                                        int ssize2 = f3.getColumnCount();
+                                                        double hypoData2[] = (double[]) f3DataArr;
                                                         cls.cls();
-                                                        System.out.println("Enter Sample elements: ");
+                                                        // System.out.println("Enter Sample elements: ");
                                                         DescriptiveStat inhypodata2 = new DescriptiveStat(hypoData2);
-                                                        hypoData2 = inhypodata2.arrayInput(ssize2);
+                                                        // hypoData2 = inhypodata2.arrayInput(ssize2);
                                                         scanner.nextLine(); // Consume newline character
                                                         HypothesisTesting hypodata2 = new HypothesisTesting(hypoData2,
                                                                 inhypodata2.mean(), nH2,
@@ -535,6 +563,9 @@ public class Main {
                                                         // double pValue;
                                                         Mfunction m23 = new Mfunction();
                                                         cls.cls();
+                                                        if (ssize2 > 30) {
+                                                            ssize2 = 30;
+                                                        }
                                                         if (tTabel[ssize2 - 2][table.column(sigLevel2) + 1] < Math
                                                                 .abs(tTest2)) {
                                                             if (tTest2 > 0) {
@@ -583,6 +614,9 @@ public class Main {
                                                         // double pValue;
                                                         Mfunction m24 = new Mfunction();
                                                         cls.cls();
+                                                        if (size22 > 30) {
+                                                            size22 = 30;
+                                                        }
                                                         if (tTabel[size22 - 2][table.column(sLevel22) + 1] < Math
                                                                 .abs(zScore22)) {
                                                             if (zScore22 > 0) {
@@ -662,21 +696,31 @@ public class Main {
                         cls.cls();
                         switch (anovaChoice) {
                             case 1:// one way
-                                System.out.println("Enter Table Row size: ");
-                                int nr = scanner.nextInt();
+                                   // System.out.println("Enter Table Row size: ");
+                                System.out.println(
+                                        "Enter the Table file path of .csv/.txt file: ");
+                                scanner.nextLine();
+                                String f4Path = scanner.nextLine();
+                                FileUtils f4 = new FileUtils();
+                                Object f4DataArr = f4.readDataFromFile(f4Path);
                                 cls.cls();
-                                System.out.println("Enter Table Column Size: ");
-                                int m = scanner.nextInt();
+
+                                // System.out.println("Enter Table Column Size: ");
+                                double[][] array2d = (double[][]) f4DataArr;
+                                int nr = f4.getRowCount();
+                                int m = f4.getColumnCount();
                                 cls.cls();
-                                double[][] array2d = new double[nr][m];
-                                System.out.println("Enter the table: ");
-                                array2d = cls.arrayInput(nr, m);
+                                // System.out.println("Enter the table: ");
+                                // array2d = cls.arrayInput(nr, m);
                                 cls.cls();
                                 ANOVA anova = new ANOVA(array2d, nr, m);
                                 double oneTS = anova.oneWay();
                                 Mfunction am1 = new Mfunction();
                                 double F_pValue = 1 - am1.F_dis_CDF(oneTS, m - 1, nr * m - m);
-
+                                int demoni = nr * m - m;
+                                if ((demoni) > 60) {
+                                    demoni = 60;
+                                }
                                 // ANOVA Table
                                 System.out.println("ANOVA");
                                 System.out.println(
@@ -686,7 +730,7 @@ public class Main {
                                 System.out.println(
                                         "+-----------------------+--------+------------+----------------+----------+");
                                 System.out.println(String.format("| %-21s | %-6.2f | %-10d | %-14.8f | %-8.3f|",
-                                        "Between Groups", anova.ssb(), m - 1, oneTS, fTabel[nr * m - m - 1][m - 2]));
+                                        "Between Groups", anova.ssb(), m - 1, oneTS, fTabel[demoni - 1][m - 2]));
                                 System.out.println(String.format("| %-21s | %-6.2f | %-10d |", "Within Groups",
                                         anova.ssw(), nr * m - m));
                                 System.out.println(
@@ -696,7 +740,7 @@ public class Main {
                                 System.out.println();
                                 System.out.println("P-value: " + F_pValue);
                                 // Output based on the condition
-                                String hypothesisResult = (fTabel[nr * m - m - 1][m - 2] > oneTS)
+                                String hypothesisResult = (fTabel[demoni - 1][m - 2] > oneTS)
                                         ? "Fail to reject Null Hypothesis."
                                         : "Reject Null Hypothesis.";
                                 System.out.println(hypothesisResult);
@@ -707,16 +751,22 @@ public class Main {
                                    // System.out.println("Coming soon....");
                                    // System.out.println();
                                    // System.out.println("Wait for the next update!");
-                                System.out.println("Enter Table Row size: ");
-                                int nrr = scanner.nextInt();
+                                   // System.out.println("Enter Table Row size: ");
+                                System.out.println(
+                                        "Enter the Table file path of .csv/.txt file: ");
+                                scanner.nextLine();
+                                String f5Path = scanner.nextLine();
+                                FileUtils f5 = new FileUtils();
+                                Object f5DataArr = f5.readDataFromFile(f5Path);
                                 cls.cls();
-                                System.out.println("Enter Table Column Size: ");
-                                int mm = scanner.nextInt();
+                                // System.out.println("Enter Table Column Size: ");
+                                int nrr = f5.getRowCount();
+                                int mm = f5.getColumnCount();
                                 cls.cls();
-                                double[][] array2D = new double[nrr][mm];
-                                System.out.println("Enter the table: ");
-                                array2D = cls.arrayInput(nrr, mm);
-                                cls.cls();
+                                double[][] array2D = (double[][]) f5DataArr;
+                                // System.out.println("Enter the table: ");
+                                // array2D = cls.arrayInput(nrr, mm);
+                                // cls.cls();
                                 TwoWayWithoutReplication anova2 = new TwoWayWithoutReplication(array2D, nrr, mm);
                                 double twoTSalpha = anova2.twoWayAlpha();
                                 double twoTSbeta = anova2.twoWayBeta();
@@ -730,6 +780,45 @@ public class Main {
                                 Mfunction am2 = new Mfunction();
                                 double F_pValueAlpha = 1 - am2.F_dis_CDF(fValueAlpha, nrr - 1, (nrr - 1) * (mm - 1));
                                 double F_pValueBeta = 1 - am2.F_dis_CDF(fValueBeta, mm - 1, (nrr - 1) * (mm - 1));
+                                int demoni2 = (nrr - 1) * (mm - 1);
+                                int nomi1 = nrr;
+                                int nomi2 = mm;
+                                if (demoni2 > 34) {
+                                    demoni2 = 34;
+                                }
+                                if (nomi1 > 10 && nomi1 <= 12)
+                                    nomi1 = 11;
+                                else if (nomi1 > 12 && nomi1 <= 15)
+                                    nomi1 = 12;
+                                else if (nomi1 > 15 && nomi1 <= 20)
+                                    nomi1 = 13;
+                                else if (nomi1 > 20 && nomi1 <= 30)
+                                    nomi1 = 15;
+                                else if (nomi1 > 30 && nomi1 <= 40)
+                                    nomi1 = 16;
+                                else if (nomi1 > 40 && nomi1 <= 60)
+                                    nomi1 = 17;
+                                else if (nomi1 > 60 && nomi1 <= 120)
+                                    nomi1 = 18;
+                                else if (nomi1 > 120)
+                                    nomi1 = 19;
+
+                                if (nomi2 > 10 && nomi2 <= 12)
+                                    nomi2 = 11;
+                                else if (nomi2 > 12 && nomi2 <= 15)
+                                    nomi2 = 12;
+                                else if (nomi2 > 15 && nomi2 <= 20)
+                                    nomi2 = 13;
+                                else if (nomi2 > 20 && nomi2 <= 30)
+                                    nomi2 = 15;
+                                else if (nomi2 > 30 && nomi2 <= 40)
+                                    nomi2 = 16;
+                                else if (nomi2 > 40 && nomi2 <= 60)
+                                    nomi2 = 17;
+                                else if (nomi2 > 60 && nomi2 <= 120)
+                                    nomi2 = 18;
+                                else if (nomi2 > 120)
+                                    nomi2 = 19;
 
                                 // Two way without RepliacationANOVA Table
                                 System.out.println("Two way ANOVA Without Replication");
@@ -741,10 +830,10 @@ public class Main {
                                         "+-----------------------+--------+------------+----------------+----------------+");
                                 System.out.println(String.format("| %-21s | %-6.2f | %-10d | %-14.8f | %-14.8f |",
                                         "Rows", anova2.ssr(), nrr - 1, fValueAlpha,
-                                        fTabel[(nrr - 1) * (mm - 1) - 1][nrr - 2]));
+                                        fTabel[demoni2 - 1][nomi1 - 2]));
                                 System.out.println(String.format("| %-21s | %-6.2f | %-10d | %-14.8f | %-14.8f |",
                                         "Columns", anova2.ssc(), mm - 1, fValueBeta,
-                                        fTabel[(nrr - 1) * (mm - 1) - 1][mm - 2]));
+                                        fTabel[demoni2 - 1][nomi2 - 2]));
                                 System.out.println(String.format("| %-21s | %-6.2f | %-10d |", "Error", anova2.sse(),
                                         (nrr - 1) * (mm - 1)));
                                 System.out.println(String.format("| %-21s | %-6.2f | %-10d |", "Total", anova2.sst(),
@@ -752,10 +841,10 @@ public class Main {
                                 System.out.println(
                                         "+-----------------------+--------+------------+----------------+----------------+");
 
-                                String tAlpha = (fValueAlpha > fTabel[(nrr - 1) * (mm - 1) - 1][nrr - 2])
+                                String tAlpha = (fValueAlpha > fTabel[demoni2 - 1][nomi1 - 2])
                                         ? "Reject Null Hypothesis for all alpha [row]."
                                         : "Fail to reject Null Hypothesis for all alpha [row].";
-                                String tBeta = (fValueBeta > fTabel[(nrr - 1) * (mm - 1) - 1][mm - 2])
+                                String tBeta = (fValueBeta > fTabel[demoni2 - 1][nomi2 - 2])
                                         ? "Reject Null Hypothesis for all beta [column]."
                                         : "Fail to reject Null Hypothesis for all beta [column].";
                                 System.out.println();
@@ -807,27 +896,33 @@ public class Main {
                         switch (chiSquareChoice) {
                             case 1: // Chi-Square Test of Independence
                                 // Input table dimensions
-                                System.out.print("Enter number of rows: ");
-                                int rows = scanner.nextInt();
+                                System.out.println(
+                                        "Enter the Table file path of .csv/.txt file: ");
+                                scanner.nextLine();
+                                String f6Path = scanner.nextLine();
+                                FileUtils f6 = new FileUtils();
+                                Object f6DataArr = f6.readDataFromFile(f6Path);
+
+                                // System.out.print("Enter number of rows: ");
                                 cls.cls();
 
-                                System.out.print("Enter number of columns: ");
-                                int cols = scanner.nextInt();
-                                cls.cls();
+                                // System.out.print("Enter number of columns: ");
+                                int rows = f6.getRowCount();
+                                int cols = f6.getColumnCount();
 
-                                double[][] observed = new double[rows][cols];
+                                double[][] observed = (double[][]) f6DataArr;
 
-                                scanner.nextLine(); // Consume newline character
                                 System.out.println("Enter the Significance Level in % : ");
+                                // scanner.nextLine(); // Consume newline character
                                 String chisLevel = scanner.nextLine();
                                 cls.cls();
                                 // Input observed frequencies
-                                System.out.println("Enter the observed frequencies Table: ");
-                                for (int i = 0; i < rows; i++) {
-                                    for (int j = 0; j < cols; j++) {
-                                        observed[i][j] = scanner.nextDouble();
-                                    }
-                                }
+                                // System.out.println("Enter the observed frequencies Table: ");
+                                // for (int i = 0; i < rows; i++) {
+                                // for (int j = 0; j < cols; j++) {
+                                // observed[i][j] = scanner.nextDouble();
+                                // }
+                                // }
                                 cls.cls();
 
                                 // Calculate totals
@@ -855,11 +950,11 @@ public class Main {
                                 // Degrees of freedom
                                 int df = (rows - 1) * (cols - 1);
 
-                                if (df <= 0 || df >= chiTable.length) {
-                                    System.out.println("Invalid degrees of freedom: " + df);
-                                    goBack();
-                                    break;
-                                }
+                                // if (df <= 0 || df >= chiTable.length) {
+                                // System.out.println("Invalid degrees of freedom: " + df);
+                                // goBack();
+                                // break;
+                                // }
 
                                 int colIndex = chisqrTable.column(chisLevel);
 
@@ -868,7 +963,38 @@ public class Main {
                                     goBack();
                                     break;
                                 }
-
+                                if (df >= 251 && df <= 300)
+                                    df = 251;
+                                else if (df >= 301 && df <= 350)
+                                    df = 252;
+                                else if (df >= 351 && df <= 400)
+                                    df = 253;
+                                else if (df >= 401 && df <= 450)
+                                    df = 254;
+                                else if (df >= 451 && df <= 500)
+                                    df = 255;
+                                else if (df >= 501 && df <= 550)
+                                    df = 256;
+                                else if (df >= 551 && df <= 600)
+                                    df = 257;
+                                else if (df >= 601 && df <= 650)
+                                    df = 258;
+                                else if (df >= 651 && df <= 700)
+                                    df = 259;
+                                else if (df >= 701 && df <= 750)
+                                    df = 260;
+                                else if (df >= 751 && df <= 800)
+                                    df = 261;
+                                else if (df >= 801 && df <= 850)
+                                    df = 262;
+                                else if (df >= 851 && df <= 900)
+                                    df = 263;
+                                else if (df >= 901 && df <= 950)
+                                    df = 264;
+                                else if (df >= 951 && df <= 1000)
+                                    df = 265;
+                                else if (df > 1000)
+                                    df = 265;
                                 System.out.println("Chi-Square Value: " + chiSquareValue);
 
                                 double criticalValue = chiTable[df - 1][colIndex];
@@ -887,20 +1013,27 @@ public class Main {
 
                             case 2: // Goodness-of-Fit
                                 // System.out.println("Goodness of Fit");
-                                System.out.print("Enter the number of categories: ");
-                                int numCategories = scanner.nextInt();
-                                double[] observedGOF = new double[numCategories];
-                                double[] expectedGOF = new double[numCategories];
+                                // System.out.print("Enter the number of categories: ");
+                                System.out.println(
+                                        "Enter the Observed Frequenceis file path of .csv/.txt file: ");
+                                scanner.nextLine();
+                                String f7Path = scanner.nextLine();
+                                FileUtils f7 = new FileUtils();
+                                Object f7DataArr = f7.readDataFromFile(f7Path);
+                                double[] observedGOF = (double[]) f7DataArr;
+                                int numCategories = f7.getColumnCount();
+                                double[] expectedGOF;
+
                                 cls.cls();
-                                scanner.nextLine(); // Consume newline character
-                                System.out.println("Enter the observed frequencies:");
-                                for (int i = 0; i < numCategories; i++) {
-                                    // System.out.print("Observed[" + (i + 1) + "]: ");
-                                    observedGOF[i] = scanner.nextDouble();
-                                }
-                                cls.cls();
+                                // scanner.nextLine(); // Consume newline character
+                                // System.out.println("Enter the observed frequencies:");
+                                // for (int i = 0; i < numCategories; i++) {
+                                // // System.out.print("Observed[" + (i + 1) + "]: ");
+                                // observedGOF[i] = scanner.nextDouble();
+                                // }
+                                // cls.cls();
                                 double grandTotalGOF = 0.0;// calculate grand total
-                                for (int i = 0; i < observedGOF.length; i++) {
+                                for (int i = 0; i < numCategories; i++) {
                                     grandTotalGOF += observedGOF[i];
                                 }
                                 System.out.println("Select the method for expected values:");
@@ -918,23 +1051,37 @@ public class Main {
 
                                 switch (methodChoice) {
                                     case 1: // Known expected values
-                                        System.out.println("Enter the expected values:");
-                                        for (int i = 0; i < numCategories; i++) {
-                                            // System.out.print("Expected[" + (i + 1) + "]: ");
-                                            expectedGOF[i] = scanner.nextDouble();
-                                        }
+                                        // System.out.println("Enter the Expected values:");
+                                        // for (int i = 0; i < numCategories; i++) {
+                                        // // System.out.print("Expected[" + (i + 1) + "]: ");
+                                        // expectedGOF[i] = scanner.nextDouble();
+                                        // }
+                                        System.out.println(
+                                                "Enter the Excepted Values file path of .csv/.txt file: ");
+                                        scanner.nextLine();
+                                        String f7KnPath = scanner.nextLine();
+                                        FileUtils f7Kn = new FileUtils();
+                                        Object f7KnDataArr = f7Kn.readDataFromFile(f7KnPath);
+                                        expectedGOF = (double[]) f7KnDataArr;
                                         chisqrValue = chiSquare.testOfGoodnessOfFit(observedGOF, expectedGOF);
                                         break;
 
                                     case 2: // Known proportions
                                         // System.out.println("Enter the total count:");
                                         // double total = scanner.nextDouble();
-                                        System.out.println("Enter the proportions (space-separated):");
-                                        double[] proportions = new double[numCategories];
-                                        for (int i = 0; i < numCategories; i++) {
-                                            // System.out.print("Proportion[" + (i + 1) + "]: ");
-                                            proportions[i] = scanner.nextDouble();
-                                        }
+                                        // System.out.println("Enter the proportions (space-separated):");
+                                        double[] proportions;
+                                        // for (int i = 0; i < numCategories; i++) {
+                                        // // System.out.print("Proportion[" + (i + 1) + "]: ");
+                                        // proportions[i] = scanner.nextDouble();
+                                        // }
+                                        System.out.println(
+                                                "Enter the Excepted Proportions Values file path of .csv/.txt file: ");
+                                        scanner.nextLine();
+                                        String f7KnpPath = scanner.nextLine();
+                                        FileUtils f7Knp = new FileUtils();
+                                        Object f7KnpDataArr = f7Knp.readDataFromFile(f7KnpPath);
+                                        proportions = (double[]) f7KnpDataArr;
                                         expectedGOF = chiSquare.calculateExpectedFromProportions(observedGOF,
                                                 grandTotalGOF,
                                                 proportions);
@@ -974,9 +1121,41 @@ public class Main {
                                     goBack();
                                     break;
                                 }
+                                if (dfGoodness >= 251 && dfGoodness <= 300)
+                                    dfGoodness = 251;
+                                else if (dfGoodness >= 301 && dfGoodness <= 350)
+                                    dfGoodness = 252;
+                                else if (dfGoodness >= 351 && dfGoodness <= 400)
+                                    dfGoodness = 253;
+                                else if (dfGoodness >= 401 && dfGoodness <= 450)
+                                    dfGoodness = 254;
+                                else if (dfGoodness >= 451 && dfGoodness <= 500)
+                                    dfGoodness = 255;
+                                else if (dfGoodness >= 501 && dfGoodness <= 550)
+                                    dfGoodness = 256;
+                                else if (dfGoodness >= 551 && dfGoodness <= 600)
+                                    dfGoodness = 257;
+                                else if (dfGoodness >= 601 && dfGoodness <= 650)
+                                    dfGoodness = 258;
+                                else if (dfGoodness >= 651 && dfGoodness <= 700)
+                                    dfGoodness = 259;
+                                else if (dfGoodness >= 701 && dfGoodness <= 750)
+                                    dfGoodness = 260;
+                                else if (dfGoodness >= 751 && dfGoodness <= 800)
+                                    dfGoodness = 261;
+                                else if (dfGoodness >= 801 && dfGoodness <= 850)
+                                    dfGoodness = 262;
+                                else if (dfGoodness >= 851 && dfGoodness <= 900)
+                                    dfGoodness = 263;
+                                else if (dfGoodness >= 901 && dfGoodness <= 950)
+                                    dfGoodness = 264;
+                                else if (dfGoodness >= 951 && dfGoodness <= 1000)
+                                    dfGoodness = 265;
+                                else if (dfGoodness > 1000)
+                                    dfGoodness = 265;
                                 System.out.println("Chi-Square Value: " + chisqrValue);
 
-                                double criticalValueGoodness = chiTable[dfGoodness][colIndexGoodness];
+                                double criticalValueGoodness = chiTable[dfGoodness - 1][colIndexGoodness];
                                 if (criticalValueGoodness > chisqrValue) {
                                     System.out
                                             .println("P-value: " + (1 - chisqrCDF.chisqr_CDF(chisqrValue, dfGoodness)));
@@ -1036,18 +1215,24 @@ public class Main {
 
                                     switch (linearChoice) {
                                         case 1:
-                                            System.out.println("Enter the number of data points: ");
-                                            int nSLR = scanner.nextInt();
+                                            // System.out.println("Enter the number of data points: ");
+                                            System.out.println(
+                                                    "Enter the Data Point[x,y] file path of .csv/.txt file: ");
+                                            scanner.nextLine();
+                                            String f8Path = scanner.nextLine();
+                                            FileUtils f8 = new FileUtils();
+                                            Object f8DataArr = f8.readDataFromFile(f8Path);
+                                            int nSLR = f8.getColumnCount();
                                             cls.cls();
-                                            double[][] tableSLR = new double[nSLR][2];
+                                            double[][] tableSLR = (double[][]) f8DataArr;
 
-                                            System.out.println("Enter the data points tableSLR (x y):");
-                                            for (int i = 0; i < nSLR; i++) {
-                                                // System.out.printf("Data Point %d: ", i + 1);
-                                                tableSLR[i][0] = scanner.nextDouble(); // x
-                                                tableSLR[i][1] = scanner.nextDouble(); // y
-                                            }
-                                            cls.cls();
+                                            // System.out.println("Enter the data points tableSLR (x y):");
+                                            // for (int i = 0; i < nSLR; i++) {
+                                            // // System.out.printf("Data Point %d: ", i + 1);
+                                            // tableSLR[i][0] = scanner.nextDouble(); // x
+                                            // tableSLR[i][1] = scanner.nextDouble(); // y
+                                            // }
+                                            // cls.cls();
                                             SimpleLinearRegression slr = new SimpleLinearRegression(tableSLR);
                                             slr.displayResults();
                                             goBack();
@@ -1055,24 +1240,30 @@ public class Main {
 
                                         case 2: // Multiple Linear Regression
                                             //////////////////////////////
-                                            System.out.print("Enter the number of rows (observations): ");
-                                            int rowsMLR = scanner.nextInt();
-                                            cls.cls();
-                                            System.out.print(
-                                                    "Enter the number of columns (predictors + 1 for response): ");
-                                            int colsMLR = scanner.nextInt();
+                                            // System.out.print("Enter the number of rows (observations): ");
+                                            // cls.cls();
+                                            // System.out.print(
+                                            // "Enter the number of columns (predictors + 1 for response): ");
+                                            System.out.println(
+                                                    "Enter the the table file (last column is Y) path of .csv/.txt file: ");
+                                            scanner.nextLine();
+                                            String f9Path = scanner.nextLine();
+                                            FileUtils f9 = new FileUtils();
+                                            Object f9DataArr = f9.readDataFromFile(f9Path);
+                                            int rowsMLR = f9.getRowCount();
+                                            int colsMLR = f9.getColumnCount();
                                             cls.cls();
 
-                                            double[][] tableMLR = new double[rowsMLR][colsMLR];
+                                            double[][] tableMLR = (double[][]) f9DataArr;
 
-                                            System.out.println("Enter the table (last column is Y): ");
-                                            for (int i = 0; i < rowsMLR; i++) {
-                                                // System.out.print("Row " + (i + 1) + ": ");
-                                                for (int j = 0; j < colsMLR; j++) {
-                                                    tableMLR[i][j] = scanner.nextDouble();
-                                                }
-                                            }
-                                            cls.cls();
+                                            // System.out.println("Enter the table file (last column is Y): ");
+                                            // for (int i = 0; i < rowsMLR; i++) {
+                                            // // System.out.print("Row " + (i + 1) + ": ");
+                                            // for (int j = 0; j < colsMLR; j++) {
+                                            // tableMLR[i][j] = scanner.nextDouble();
+                                            // }
+                                            // }
+                                            // cls.cls();
                                             double[][] predictors = new double[rowsMLR][colsMLR - 1];
                                             double[] response = new double[rowsMLR];
 
@@ -1104,19 +1295,38 @@ public class Main {
                                 System.out.println("Enter the degree of the polynomial:");
                                 int degreePR = scanner.nextInt();
                                 cls.cls();
+                                System.out.println(
+                                        "Enter the Observed Frequenceis file path of .csv/.txt file: ");
+                                scanner.nextLine();
+                                String f10Path = scanner.nextLine();
+                                FileUtils f10 = new FileUtils();
+                                Object f10DataArr = f10.readDataFromFile(f10Path);
 
-                                System.out.println("Enter the number of data points:");
-                                int nPR = scanner.nextInt();
+                                // System.out.println("Enter the number of data points:");
+                                int nPR = f10.getRowCount();
+                                double[][] tempo22 = (double[][]) f10DataArr;
+                               
+
+                                // Extract the first column (xPR)
                                 double[] xPR = new double[nPR];
+                                for (int i = 0; i < nPR; i++) {
+                                    xPR[i] = tempo22[i][0];
+                                }
+
+                                // Extract the second column (yPR)
                                 double[] yPR = new double[nPR];
+                                for (int i = 0; i < nPR; i++) {
+                                    yPR[i] = tempo22[i][1];
+                                }
+
                                 cls.cls();
 
-                                System.out.println("Enter the data points (x y) separated by space:");
-                                for (int i = 0; i < nPR; i++) {
-                                    // System.out.printf("Data point %d: ", i + 1);
-                                    xPR[i] = scanner.nextDouble();
-                                    yPR[i] = scanner.nextDouble();
-                                }
+                                // System.out.println("Enter the data points (x y) separated by space:");
+                                // for (int i = 0; i < nPR; i++) {
+                                // // System.out.printf("Data point %d: ", i + 1);
+                                // xPR[i] = scanner.nextDouble();
+                                // yPR[i] = scanner.nextDouble();
+                                // }
                                 cls.cls();
 
                                 PolynomialRegression model = new PolynomialRegression(degreePR);

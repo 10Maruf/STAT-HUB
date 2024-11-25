@@ -59,9 +59,18 @@ public class ChiSquare {
     // expected frequencies using Poisson distribution
     public double[] calculateExpectedFromPoisson(double[] observed, double lambda, double total) {
         double[] expected = new double[observed.length];
-        for (int i = 0; i < expected.length; i++) {
-            expected[i] = ((Math.pow(lambda, i) * Math.exp(-lambda)) / factorial(i)) * total; // Poisson formula
+        double cumulativeProbability = 0.0;
+
+        for (int i = 0; i < expected.length - 1; i++) {
+            double probability = (Math.pow(lambda, i) * Math.exp(-lambda)) / factorial(i); // Poisson formula
+            expected[i] = probability * total;
+            cumulativeProbability += probability;
         }
+
+        // Last value: remaining probability mass
+        double lastProbability = 1.0 - cumulativeProbability;
+        expected[expected.length - 1] = lastProbability * total;
+
         return expected;
     }
 

@@ -7,7 +7,7 @@ public class Loading implements StatGraphics {
         for (int i = 0; i < 10; i++) {
             try {
                 // Sleep for a short duration to create a delay
-                Thread.sleep(500);
+                Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
