@@ -1,6 +1,9 @@
 
 import java.util.Arrays;
 import java.util.Scanner;
+
+import javax.swing.SwingUtilities;
+
 import StatHub.DescriptiveStat;
 import StatHub.Statistic;
 import StatGraphics.Credits;
@@ -19,7 +22,7 @@ import StatHub.SimpleLinearRegression;
 import StatHub.MultipleLinearRegression;
 import StatHub.PolynomialRegression;
 import StatFile.FileUtils;
-
+import StatGraphChart.GraphChartGUI;
 public class Main {
     public static void goBack() {
         System.out.println();
@@ -60,7 +63,8 @@ public class Main {
             System.out.println("3. ANOVA");
             System.out.println("4. Chi-Square");
             System.out.println("5. Regression Analysis");
-            System.out.println("6. Credits");
+            System.out.println("6. Graph and Chart [GUI]");
+            System.out.println("7. Credits");
             System.out.println("0. Exit");
 
             // Read user input for main menu
@@ -1305,7 +1309,6 @@ public class Main {
                                 // System.out.println("Enter the number of data points:");
                                 int nPR = f10.getRowCount();
                                 double[][] tempo22 = (double[][]) f10DataArr;
-                               
 
                                 // Extract the first column (xPR)
                                 double[] xPR = new double[nPR];
@@ -1346,11 +1349,19 @@ public class Main {
                     }
                     break;
 
-                case 6:// credits
+                case 6: // Graph and Chart
+                    System.out.println("Launching GUI for Graph and Chart...");
+                    SwingUtilities.invokeLater(GraphChartGUI::new);
+                    goBack(); // Return to CLI after GUI launches
+                    cls.cls();
+
+                    break;
+                case 7:// credits
                     creditsGraphics.art();
                     goBack();
                     cls.cls();
                     break;
+
                 case 0:
                     // Exit program
                     exitProgram = true;

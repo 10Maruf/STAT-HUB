@@ -16,6 +16,8 @@
             "request": "launch",
             "mainClass": "Main",
             "projectName": "STAT HUB_b3740cd3"
-        }
+
+        },
+
     ]
 }
